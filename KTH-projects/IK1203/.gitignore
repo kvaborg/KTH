@@ -1,0 +1,5 @@
+# Ignore java bytecode files
+*.class
+
+# Intellij (?)
+*/.idea
