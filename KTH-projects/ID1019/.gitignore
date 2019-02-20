@@ -1,0 +1,16 @@
+# Ignore irrelevant files
+*.pdf
+*.tex
+*.log
+*.gz
+*.aux
+*.beam
+*.ppm
+*.txt
+*.dump
+
+# Ignore irrelevant folders
+git/*
+test/*
+
+
