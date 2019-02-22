@@ -25,11 +25,13 @@ public class HTTPAsk {
             outToClient.writeBytes(serverResponse);
           } catch (Exception e) {
             outToClient.writeBytes("HTTP/1.1 404 Not Found\r\n\r\n");
+            outToClient.writeBytes(e.toString());
             connectionSocket.close();
           }
 
         } catch(Exception e) {
           outToClient.writeBytes("HTTP/1.1 400 Bad Request\r\n\r\n");
+          outToClient.writeBytes(e.toString());
           connectionSocket.close();
         }
 
@@ -51,10 +53,27 @@ public class HTTPAsk {
       }
     }
 
+    private static boolean checkAsk(String url) {
+      String[] seq = url.split("[/?]");
+      boolean ask = false;
+
+      if (seq[1].equals("ask")) {
+        ask = true;
+      }
+
+      return ask;
+    }
+
     private static String getUrl(BufferedReader br) throws IOException {
       String httpReq = br.readLine();
-      String[] url = httpReq.split(" ");
-      return url[1];
+      String[] seq = httpReq.split(" ");
+      String url = seq[1];
+
+      if (!(checkAsk(url))) {
+        return null;
+      }
+
+      return url;
     }
 
     private static String getHost(String url) {
