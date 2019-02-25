@@ -1,7 +1,7 @@
 import java.net.*;
 import java.io.*;
 
-public class HTTPAsk {
+public class ConcHTTPAsk {
     public static void main( String[] args) throws IOException {
       String serverResponse;
 
@@ -77,38 +77,23 @@ public class HTTPAsk {
     }
 
     private static String getHost(String url) {
-      String pattern = "(.+)(hostname=)([a-zA-Z0-9\\.]+)(&*.*)";
-      String host = url.replaceAll(pattern, "$3");
-      System.out.println(host);
-
-      // String[] arr = url.split("[=&]");
-      // String host = arr[1];
-
+      String[] arr = url.split("[=&]");
+      String host = arr[1];
       return host;
     }
 
     private static String getPort(String url) {
-      String pattern = "(.+)(port=)([0-9]+)(&*.*)";
-      String port = url.replaceAll(pattern, "$3");
-      System.out.println(port);
-      // String[] arr = url.split("[=&]");
-      return port;
+      String[] arr = url.split("[=&]");
+      return arr[3];
     }
 
     private static String getString(String url) {
-      String pattern = "(.+)(string=)([a-zA-z0-9\\.]+)(&*.*)";
-      String str = url.replaceAll(pattern, "$3");
-      System.out.println(str);
-
-      return str;
-
-
-      // String[] arr = url.split("string=");
-      // if (arr.length > 1) {
-      //   return arr[1];
-      // } else {
-      //   return "";
-      // }
+      String[] arr = url.split("string=");
+      if (arr.length > 1) {
+        return arr[1];
+      } else {
+        return "";
+      }
     }
 
 
