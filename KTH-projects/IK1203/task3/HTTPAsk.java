@@ -81,9 +81,6 @@ public class HTTPAsk {
       String host = url.replaceAll(pattern, "$3");
       System.out.println(host);
 
-      // String[] arr = url.split("[=&]");
-      // String host = arr[1];
-
       return host;
     }
 
@@ -91,7 +88,7 @@ public class HTTPAsk {
       String pattern = "(.+)(port=)([0-9]+)(&*.*)";
       String port = url.replaceAll(pattern, "$3");
       System.out.println(port);
-      // String[] arr = url.split("[=&]");
+
       return port;
     }
 
@@ -101,14 +98,6 @@ public class HTTPAsk {
       System.out.println(str);
 
       return str;
-
-
-      // String[] arr = url.split("string=");
-      // if (arr.length > 1) {
-      //   return arr[1];
-      // } else {
-      //   return "";
-      // }
     }
 
 
