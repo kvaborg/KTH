@@ -25,13 +25,11 @@ public class HTTPAsk {
             outToClient.writeBytes(serverResponse);
           } catch (Exception e) {
             outToClient.writeBytes("HTTP/1.1 404 Not Found\r\n\r\n");
-            outToClient.writeBytes(e.toString());
             connectionSocket.close();
           }
 
         } catch(Exception e) {
           outToClient.writeBytes("HTTP/1.1 400 Bad Request\r\n\r\n");
-          outToClient.writeBytes(e.toString());
           connectionSocket.close();
         }
 
