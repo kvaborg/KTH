@@ -7,11 +7,6 @@ public class ConcHTTPAsk {
       ServerSocket welcomeSocket = new ServerSocket(port);
 
       while(true) {
-<<<<<<< HEAD
-        Socket connectionSocket = welcomeSocket.accept();
-        BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
-        DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
-=======
         Socket connectionSocket = null;
 
         try {
@@ -22,7 +17,6 @@ public class ConcHTTPAsk {
 
         Thread th = new Thread(new MyRunnable(connectionSocket));
         th.start();
->>>>>>> task4
       }
     }
 }
