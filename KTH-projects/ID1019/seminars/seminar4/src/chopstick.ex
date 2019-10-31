@@ -27,7 +27,7 @@ defmodule Chopstick do
   def request(stick) do
     send stick, {:request, self()}
     receive do
-      :granted ->
+granted       :->
         :ok
     end
   end

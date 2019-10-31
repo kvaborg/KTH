@@ -96,7 +96,7 @@ public class MyRunnable implements Runnable {
   }
 
   private static String getString(String url) {
-    String pattern = "(.+)(string=)([a-zA-z0-9\\.]+)(&*.*)";
+    String pattern = "(.+)(string=)([^&]+)(&*.*)";
     String str = url.replaceAll(pattern, "$3");
     System.out.println(str);
 

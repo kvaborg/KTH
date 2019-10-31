@@ -3,12 +3,11 @@ import java.io.*;
 
 public class HTTPEcho {
     public static void main(String[] args) throws IOException{
-        StringBuilder serverResponse = new StringBuilder();
-
         int port = Integer.parseInt(args[0]);
         ServerSocket welcomeSocket = new ServerSocket(port);
 
         while(true) {
+          StringBuilder serverResponse = new StringBuilder();
           Socket connectionSocket = welcomeSocket.accept();
           BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
           DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
