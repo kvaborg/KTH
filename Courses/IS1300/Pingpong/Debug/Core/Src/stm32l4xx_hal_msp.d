@@ -29,8 +29,9 @@ Core/Src/stm32l4xx_hal_msp.o: ../Core/Src/stm32l4xx_hal_msp.c \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_pwr_ex.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h \
- ../Core/Inc/test.h ../Core/Inc/clock.h ../Core/Inc/usart.h \
- ../Core/Inc/main.h ../Core/Inc/gpio.h ../Core/Inc/pingpong.h
+ ../Core/Inc/test.h ../Core/Inc/pingpong_functions.h ../Core/Inc/gpio.h \
+ ../Core/Inc/main.h ../Core/Inc/clock.h ../Core/Inc/usart.h \
+ ../Core/Inc/pingpong.h
 
 ../Core/Inc/main.h:
 
@@ -96,12 +97,14 @@ Core/Src/stm32l4xx_hal_msp.o: ../Core/Src/stm32l4xx_hal_msp.c \
 
 ../Core/Inc/test.h:
 
-../Core/Inc/clock.h:
+../Core/Inc/pingpong_functions.h:
 
-../Core/Inc/usart.h:
+../Core/Inc/gpio.h:
 
 ../Core/Inc/main.h:
 
-../Core/Inc/gpio.h:
+../Core/Inc/clock.h:
+
+../Core/Inc/usart.h:
 
 ../Core/Inc/pingpong.h:

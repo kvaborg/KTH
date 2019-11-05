@@ -67,7 +67,7 @@ extern void initialise_monitor_handles(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+#undef RUN_TEST_PROGRAM
   /* USER CODE END 1 */
   
   /* MCU Configuration--------------------------------------------------------*/
@@ -90,11 +90,7 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-#ifdef RUN_TEST_PROGRAM
-  Test_program();
-#else
-  Pingpong();
-#endif
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -102,7 +98,11 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+	#ifdef RUN_TEST_PROGRAM
+	  Test_program();
+	#else
+	  Pingpong();
+	#endif
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

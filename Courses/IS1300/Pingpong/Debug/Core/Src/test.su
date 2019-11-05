@@ -1,3 +1,5 @@
-test.c:5:6:Test_program	8	static
-test.c:11:6:Test_Led	16	static
-test.c:24:6:Test_Show_points	16	static
+test.c:19:6:Test_program	8	static
+test.c:32:6:Test_Led	16	static
+test.c:45:6:Test_Blink_LEDs	8	static
+test.c:55:6:Test_Show_points	16	static
+test.c:73:6:Test_buttons	16	static
