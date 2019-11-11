@@ -20,8 +20,8 @@ void Test_program(void)
 {
 	//Test_Led();
 	//Test_Blink_LEDs();
-	//Test_Show_points();
-	Test_buttons();
+	Test_Show_points();
+	//Test_buttons();
 }
 
 /**

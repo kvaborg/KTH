@@ -1,6 +1,13 @@
 reated by https://www.gitignore.io/api/eclipse
 Edit at https://www.gitignore.io/?templates=eclipse
 
+# Custom
+.settings/
+.project
+.cproject
+.mxproject
+Debug/
+
 ### Eclipse ###
 .metadata
 bin/

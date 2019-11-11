@@ -67,7 +67,7 @@ void Blink_LEDs(uint8_t times)
 			HAL_GPIO_WritePin(L_PORTS[i], L_PINS[i], GPIO_PIN_RESET);
 		}
 
-		HAL_Delay(300);
+		HAL_Delay(100);
 	}
 
 	HAL_Delay(500);

@@ -67,7 +67,7 @@ extern void initialise_monitor_handles(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-#undef RUN_TEST_PROGRAM
+//#undef RUN_TEST_PROGRAM
   /* USER CODE END 1 */
   
   /* MCU Configuration--------------------------------------------------------*/
