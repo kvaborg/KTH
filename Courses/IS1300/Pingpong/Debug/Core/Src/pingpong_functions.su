@@ -1,5 +1,0 @@
-pingpong_functions.c:21:6:Led_on	80	static
-pingpong_functions.c:42:6:Blink_LEDs	80	static
-pingpong_functions.c:82:6:Show_points	80	static
-pingpong_functions.c:117:6:L_hit	8	static
-pingpong_functions.c:130:6:R_hit	8	static
