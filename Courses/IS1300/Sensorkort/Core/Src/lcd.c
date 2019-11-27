@@ -1,27 +1,31 @@
 #include "lcd.h"
 
-#define BUFFERSIZE 24
-#define DISP_PKG_LENGTH 3 // No of bytes in one package to Display
+void display_init() {
+	write_instr(0x3A);	//8-Bit data length extension Bit RE=1; REV=0
+	write_instr(0x09);	//4 line display
+	write_instr(0x06);	//Bottom view
+	write_instr(0x1E);	//Bias setting BS1=1
+	write_instr(0x39);	//8-Bit data length extension Bit RE=0; IS=1
+	write_instr(0x1B);	//BS0=1 -> Bias=1/6
+	write_instr(0x6E); //Devider on and set value
+	write_instr(0x56); //Booster on and set contrast (BB1=C5, DB0=C4)
+	write_instr(0x7A); //Set contrast (DB3-DB0=C3-C0)
+	write_instr(0x38); //Set contrast (DB3-DB0=C3-C0)
+	write_instr(0x0F); //Display on, Cursor on, blink on
+}
 
-uint32_t Buffer[] = {0xF84020};
+void write_instr(char instr) {
+	unsigned char start_byte = 0x1F;
+	unsigned char lower_data = (instr & 0x0F);
+	unsigned char higher_data = ((instr >> 4) & 0x0F);
 
-uint32_t func_set = 0xF83010;
-uint32_t clear_disp = 0xF80010;
-uint32_t OSC_freq = 0xF81030;
-uint32_t contrast = 0xF870F0;
-uint32_t power_icon = 0xF850C0;
-uint32_t follower_ctrl = 0xF860E0;
-uint32_t power_on = 0xF800F0;
+	unsigned char *start_ptr = &start_byte;
+	unsigned char *lower_ptr = &lower_data;
+	unsigned char *higher_ptr = &higher_data;
 
-
-
-void init_display() {
-	HAL_SPI_Transmit(&hspi2, (uint32_t *)func_set, BUFFERSIZE, 1000);
-	HAL_SPI_Transmit(&hspi2, (uint32_t *)clear_disp, BUFFERSIZE, 1000);
-	HAL_SPI_Transmit(&hspi2, (uint32_t *)OSC_freq, BUFFERSIZE, 1000);
-	HAL_SPI_Transmit(&hspi2, (uint32_t *)contrast, BUFFERSIZE, 1000);
-	HAL_SPI_Transmit(&hspi2, (uint32_t *)power_icon, BUFFERSIZE, 1000);
-	HAL_SPI_Transmit(&hspi2, (uint32_t *)power_on, BUFFERSIZE, 1000);
+	HAL_SPI_Transmit(&hspi2, start_ptr, 8, 100);
+	HAL_SPI_Transmit(&hspi2, lower_ptr, 8, 100);
+	HAL_SPI_Transmit(&hspi2, higher_ptr, 8, 100);
 }
 
 void write_to_disp() {

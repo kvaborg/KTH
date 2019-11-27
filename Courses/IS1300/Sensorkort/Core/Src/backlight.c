@@ -9,7 +9,7 @@ void set_color(char *col) {
 	} else if(strcmp(col, "White") == 0 || strcmp(col, "white") == 0) {
 		HAL_GPIO_WritePin(Disp_White_GPIO_Port, Disp_White_Pin, SET);
 	} else {
-
+		// HAL_ERROR?
 	}
 
 }
