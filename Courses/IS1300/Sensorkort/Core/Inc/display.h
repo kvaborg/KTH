@@ -1,9 +1,19 @@
+/**
+ *****************************************************
+ @brief Display, Display header file
+ @file display.h
+ @author Alexander Borg
+ @version 1.0
+ @date 28-November-2019
+ @brief Header file for display
+ *****************************************************
+ */
+
 #ifndef DISPLAY_H
 #define DISPLAY_H
 #endif
 
-#include "spi.h"
 #include "stdint.h"
-
-void init_display(void);
-void write_to_disp(void);
+#include "spi.h"
+#include "lcd.h"
+#include "backlight.h"
