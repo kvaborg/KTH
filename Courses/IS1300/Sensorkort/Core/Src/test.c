@@ -18,16 +18,19 @@
 */
 void test_program() {
 	//test_set_color();
-	test_lcd_init();
-	HAL_Delay(1000);
-	test_lcd_clear();
-	HAL_Delay(1000);
+//	test_lcd_init();
+//	HAL_Delay(1000);
+//	test_lcd_clear();
+//	HAL_Delay(1000);
 //	test_lcd_on_off();
 //	HAL_Delay(1000);
-	test_lcd_set_ROM();
-	HAL_Delay(1000);
-	test_lcd_set_pos();
-	HAL_Delay(1000);
-	test_lcd_write_string();
+//	test_lcd_set_ROM();
+//	HAL_Delay(1000);
+//	test_lcd_set_pos();
+//	HAL_Delay(1000);
+//	test_lcd_write_string();
+//	HAL_Delay(5000);
 //	test_lcd_write_char();
+
+	test_usb_get_data();
 }

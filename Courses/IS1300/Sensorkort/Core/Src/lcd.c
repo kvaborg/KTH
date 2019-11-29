@@ -35,7 +35,9 @@ void lcd_init() {
 	lcd_write_instr(0x56); //Booster on and set contrast (BB1=C5, DB0=C4)
 	lcd_write_instr(0x7A); //Set contrast (DB3-DB0=C3-C0)
 	lcd_write_instr(0x38); //8 bit data length extension Bit RE=0; IS=0
-	lcd_write_instr(0x0F); //Display on, Cursor on, blink on
+
+	lcd_clear();
+	lcd_on_off(DISPLAY_ON);
 }
 
 /*
@@ -63,106 +65,106 @@ void lcd_write_instr(uint8_t instr) {
 	}
 }
 
-		/*
+/*
 @brief lcd_write_data, writes data to the LCD, RS = 1 R/W = 1
 @param data, data to write to the LCD
 @return void, no return value
-		 */
-		void lcd_write_data(uint8_t data) {
+ */
+void lcd_write_data(uint8_t data) {
 
-			uint8_t start_byte = 0x5F;					//Send 5 synchronisation bits, RS = 1, R/W = 0
-			uint8_t lower_data = (data & 0x0F);			//send lower data bits
-			uint8_t higher_data = ((data>>4) & 0x0F);	//send higher data bits
+	uint8_t start_byte = 0x5F;					//Send 5 synchronisation bits, RS = 1, R/W = 0
+	uint8_t lower_data = (data & 0x0F);			//send lower data bits
+	uint8_t higher_data = ((data>>4) & 0x0F);	//send higher data bits
 
-			static uint8_t data_buffer[MAX_BUFFER_SIZE];
-			data_buffer[0] = start_byte;
-			data_buffer[1] = lower_data;
-			data_buffer[2] = higher_data;
+	static uint8_t data_buffer[MAX_BUFFER_SIZE];
+	data_buffer[0] = start_byte;
+	data_buffer[1] = lower_data;
+	data_buffer[2] = higher_data;
 
-			if(HAL_SPI_STATE_READY) {
-				HAL_GPIO_WritePin(SPI2_CS_GPIO_Port, SPI2_CS_Pin, GPIO_PIN_RESET);
-				HAL_Delay(5);
+	if(HAL_SPI_STATE_READY) {
+		HAL_GPIO_WritePin(SPI2_CS_GPIO_Port, SPI2_CS_Pin, GPIO_PIN_RESET);
+		HAL_Delay(5);
 
-				HAL_SPI_Transmit(&hspi2, data_buffer, MAX_BUFFER_SIZE, 100);
+		HAL_SPI_Transmit(&hspi2, data_buffer, MAX_BUFFER_SIZE, 100);
 
-				HAL_GPIO_WritePin(SPI2_CS_GPIO_Port, SPI2_CS_Pin, GPIO_PIN_SET);
-			}
-		}
+		HAL_GPIO_WritePin(SPI2_CS_GPIO_Port, SPI2_CS_Pin, GPIO_PIN_SET);
+	}
+}
 
-		/*
+/*
 @brief lcd_clear, clears the display
 @param void, no parameters
 @return void, no return value
-		 */
-		void lcd_clear(void)
-		{
-			lcd_write_instr(0x01);
-			lcd_set_pos(LINE1);
-		}
+ */
+void lcd_clear()
+{
+	lcd_write_instr(0x01);
+	lcd_set_pos(LINE1);
+}
 
-		/*
+/*
 @brief lcd_set_pos, sets position
 @param pos, the position
 @return void, no return value
-		 */
-		void lcd_set_pos(uint8_t pos) {
-			lcd_write_instr(LCD_HOME_L1+pos);
-		}
+ */
+void lcd_set_pos(uint8_t pos) {
+	lcd_write_instr(LCD_HOME_L1+pos);
+}
 
-		/*
+/*
 @brief lcd_write_char, writes a charachter to the LCD
 @param ch, the character to write
 @return void, no return value
-		 */
-		void lcd_write_char(uint8_t ch) {
-			lcd_write_data(ch);
-		}
+ */
+void lcd_write_char(uint8_t ch) {
+	lcd_write_data(ch);
+}
 
-		/*
+/*
 @brief lcd_write_string, writes a string to the LCD
 @param string, pointer to the string to write
 @return void, no return value
-		 */
-		void lcd_write_string(uint8_t * string) {
-			do
-			{
-				lcd_write_data(*string++);
-			}
-			while(*string);
-		}
+ */
+void lcd_write_string(uint8_t * string) {
+	do
+	{
+		lcd_write_data(*string++);
+	}
+	while(*string);
+}
 
-		/*
+/*
 @brief lcd_on_off, turns the display on or off
 @param data, pointer to the string to write
 @return void, no return value
-		 */
-		void lcd_on_off(uint8_t data) {
-			lcd_write_instr(0x08+data);
-		}
+ */
+void lcd_on_off(uint8_t data) {
+	lcd_write_instr(0x08+data);
+}
 
-		/*
+/*
 @brief lcd_set_contrast, sets the contrast on the LCD
 @param contr, contrast value (DB3-DB0=C3-C0)
 @return void, no return value
-		 */
-		void lcd_set_contrast(uint8_t contr) {
-			lcd_write_instr(0x39);
-			lcd_write_instr(0x54 | (contr >> 4));
-			lcd_write_instr(0x70 | (contr & 0x0F));
-			lcd_write_instr(0x38);
-		}
+ */
+void lcd_set_contrast(uint8_t contr) {
+	lcd_write_instr(0x39);
+	lcd_write_instr(0x54 | (contr >> 4));
+	lcd_write_instr(0x70 | (contr & 0x0F));
+	lcd_write_instr(0x38);
+}
 
-		/*
+/*
 @brief lcd_set_ROM, sets the character set (ROMA=0x00, ROMB=0x04, ROMC=0x0C)
 @param contr, contrast value (DB3-DB0=C3-C0)
 @return void, no return value
-		 */
-		void lcd_set_ROM(uint8_t rom) {
-			lcd_write_instr(0x3A);
-			lcd_write_instr(0x72);
-			lcd_write_data(rom);
-			lcd_write_instr(0x38);
-		}
+ */
+void lcd_set_ROM(uint8_t rom) {
+	lcd_write_instr(0x3A);
+	lcd_write_instr(0x72);
+	lcd_write_data(rom);
+	lcd_write_instr(0x38);
+}
 
 
 

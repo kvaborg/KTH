@@ -29,7 +29,8 @@
 
 #define DISPLAY_ON 	0x04
 #define DISPLAY_OFF 0x03
-
+#define BLINK_ON	0x01
+#define BLINK_OFF	0x06
 #define CURSOR_ON	0x02
 #define CURSOR_OFF	0x05
 

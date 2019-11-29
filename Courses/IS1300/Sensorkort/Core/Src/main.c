@@ -101,7 +101,11 @@ int main(void)
   MX_UART5_Init();
   /* USER CODE BEGIN 2 */
 	//init_display();
-
+#ifdef RUN_TEST_PROGRAM
+	test_program();
+#else
+	//Pingpong();
+#endif
 
   /* USER CODE END 2 */
 
@@ -109,11 +113,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 	while (1)
 	{
-#ifdef RUN_TEST_PROGRAM
-	test_program();
-#else
-	//Pingpong();
-#endif
 		//HAL_GPIO_WritePin(Disp_Green_GPIO_Port, Disp_Green_Pin, GPIO_PIN_SET);
     /* USER CODE END WHILE */
 
