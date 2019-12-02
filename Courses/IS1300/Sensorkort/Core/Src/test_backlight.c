@@ -11,9 +11,9 @@
 
 #include "test_backlight.h"
 
-char green[] = "Green";
-char red[] = "Red";
-char white[] = "White";
+uint8_t green[] = "Green";
+uint8_t red[] = "Red";
+uint8_t white[] = "White";
 
 /*
 @brief test_backlight_set_color, tests the backlight_set_color function
@@ -21,6 +21,6 @@ char white[] = "White";
 @return void, no return value
 */
 void test_backlight_set_color() {
-	set_color(white);
+	backlight_set_color(white);
 	HAL_Delay(1000);
 }

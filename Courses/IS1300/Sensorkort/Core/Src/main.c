@@ -113,7 +113,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 	while (1)
 	{
-		//HAL_GPIO_WritePin(Disp_Green_GPIO_Port, Disp_Green_Pin, GPIO_PIN_SET);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

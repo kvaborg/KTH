@@ -10,3 +10,15 @@
  */
 
 #include "display.h"
+
+/*
+@brief display_time, prints the current time on the LCD.
+@param void, no parameters
+@return void, no return value
+*/
+void display_time() {
+	rtc_set_time(); // Should be refactored
+	char * time = rtc_get_time();
+	lcd_set_pos(LINE1);
+	lcd_write_string((uint8_t *)time);
+}

@@ -18,4 +18,4 @@
 #include "usart.h"
 
 void usb_send_data(char * data);
-uint8_t * usb_get_data(void);
+char * usb_get_data(void);

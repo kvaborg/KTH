@@ -28,6 +28,6 @@ void test_usb_send_data() {
 @return void, no parameters
 */
 void test_usb_get_data(void) {
-	uint8_t * data = usb_get_data();
+	char * data = usb_get_data();
 	usb_send_data((char *)data);
 }

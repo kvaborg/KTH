@@ -18,8 +18,9 @@
 */
 void test_program() {
 	//test_set_color();
-//	test_lcd_init();
-//	HAL_Delay(1000);
+	test_lcd_init();
+	HAL_Delay(1000);
+
 //	test_lcd_clear();
 //	HAL_Delay(1000);
 //	test_lcd_on_off();
@@ -31,6 +32,10 @@ void test_program() {
 //	test_lcd_write_string();
 //	HAL_Delay(5000);
 //	test_lcd_write_char();
+	while(1) {
+		test_display_time();
+	}
 
-	test_usb_get_data();
+
+//	test_usb_get_data();
 }
