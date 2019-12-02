@@ -115,7 +115,7 @@ void HAL_RTC_MspDeInit(RTC_HandleTypeDef* rtcHandle)
 @brief rtc_set_time, sets the RTC according to user input over USB and UART.
 @param void, no parameters
 @return void, no return value
-*/
+ */
 void rtc_set_time(void){
 	usb_send_data("Set the time \"HHMMSS\"");
 	uint8_t * user_set_time = rtc_char_to_int(usb_get_data());
@@ -125,33 +125,37 @@ void rtc_set_time(void){
 
 	/** Initialize RTC and set the Time and Date
 	 */
-	sTime.Hours = user_set_time[0];
-	sTime.Minutes = user_set_time[1];
-	sTime.Seconds = user_set_time[2];
-	sTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
-	sTime.StoreOperation = RTC_STOREOPERATION_RESET;
-	if (HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BIN) != HAL_OK)
-	{
+	if(user_set_time[0] <= 23 && user_set_time[1] <= 59 && user_set_time[2] <= 59) {
+		sTime.Hours = user_set_time[0];
+		sTime.Minutes = user_set_time[1];
+		sTime.Seconds = user_set_time[2];
+		sTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
+		sTime.StoreOperation = RTC_STOREOPERATION_RESET;
+		if (HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BIN) != HAL_OK)
+		{
+			Error_Handler();
+		}
+		sDate.WeekDay = RTC_WEEKDAY_MONDAY;
+		sDate.Month = RTC_MONTH_JANUARY;
+		sDate.Date = 1;
+		sDate.Year = 0;
+
+		if (HAL_RTC_SetDate(&hrtc, &sDate, RTC_FORMAT_BIN) != HAL_OK)
+		{
+			Error_Handler();
+		}
+	} else {
 		Error_Handler();
 	}
-	sDate.WeekDay = RTC_WEEKDAY_MONDAY;
-	sDate.Month = RTC_MONTH_JANUARY;
-	sDate.Date = 1;
-	sDate.Year = 0;
 
-	if (HAL_RTC_SetDate(&hrtc, &sDate, RTC_FORMAT_BIN) != HAL_OK)
-	{
-		Error_Handler();
-	}
-
-	//HAL_RTCEx_BKUPWrite(&hrtc, RTC_BKP_DR1, 0x32F2); // Write to backup register
+	HAL_RTCEx_BKUPWrite(&hrtc, RTC_BKP_DR1, 0x32F2); // Write to backup register
 }
 
 /*
 @brief rtc_get_time, Fetches the current time from RTC time and date registers.
 @param void, no parameters
 @return time, the current time as a string.
-*/
+ */
 char * rtc_get_time() {
 
 	RTC_DateTypeDef gDate;
@@ -174,7 +178,7 @@ char * rtc_get_time() {
 @brief rtc_char_to_int, helper function to convert char input from user to uint8.
 @param void, no parameters
 @return time, the current time as a pointer to uint8 array.
-*/
+ */
 uint8_t * rtc_char_to_int(char string[]) {
 	char string_arg[6];
 	strncpy(string_arg, string, 6);
@@ -184,11 +188,7 @@ uint8_t * rtc_char_to_int(char string[]) {
 	int i;
 
 	for(i = 0; i < 3; i++) {
-		if((uint8_t)string_arg[i*2] - 0x30 <= 5) {
-			time[i] = ((((uint8_t)string_arg[i*2] - 0x30) * 10) + (((uint8_t)string_arg[i*2+1])) - 0x30); // convert to uint8 and sum
-		} else {
-			Error_Handler();
-		}
+		time[i] = ((((uint8_t)string_arg[i*2] - 0x30) * 10) + (((uint8_t)string_arg[i*2+1])) - 0x30); // convert to uint8 and sum
 	}
 
 	return time;

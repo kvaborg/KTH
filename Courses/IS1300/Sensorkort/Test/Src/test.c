@@ -32,7 +32,7 @@ void test_program() {
 //	test_lcd_write_string();
 //	HAL_Delay(5000);
 //	test_lcd_write_char();
-test_rtc_set_time();
+	test_rtc_set_time();
 	while(1) {
 		test_display_time();
 	}

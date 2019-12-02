@@ -20,5 +20,5 @@
 void display_time() {
 	char * time = rtc_get_time();
 	lcd_set_pos(LINE1);
-	lcd_write_string((uint8_t *)time);
+	lcd_write_string((char *)time);
 }

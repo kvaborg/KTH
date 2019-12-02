@@ -125,7 +125,7 @@ void lcd_write_char(uint8_t ch) {
 @param string, pointer to the string to write
 @return void, no return value
  */
-void lcd_write_string(uint8_t * string) {
+void lcd_write_string(char * string) {
 	do
 	{
 		lcd_write_data(*string++);
