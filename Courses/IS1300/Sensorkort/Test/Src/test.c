@@ -9,7 +9,7 @@
  *****************************************************
  */
 
-#include "test.h"
+#include "../Inc/test.h"
 
 /*
 @brief test_program, main test program that runs tests for all components
@@ -19,8 +19,8 @@
 void test_program() {
 	//test_set_color();
 	test_lcd_init();
-	HAL_Delay(1000);
-
+	HAL_Delay(100);
+//	test_rtc_string_to_int();
 //	test_lcd_clear();
 //	HAL_Delay(1000);
 //	test_lcd_on_off();
@@ -32,6 +32,7 @@ void test_program() {
 //	test_lcd_write_string();
 //	HAL_Delay(5000);
 //	test_lcd_write_char();
+test_rtc_set_time();
 	while(1) {
 		test_display_time();
 	}

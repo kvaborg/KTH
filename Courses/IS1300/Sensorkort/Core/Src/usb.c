@@ -20,7 +20,7 @@ void usb_send_data(char * data) {
 	char * data_terminator = "\n\r";
 	char * buffer = strcat(data, data_terminator);
 
-	HAL_UART_Transmit(&huart5, (uint8_t *)buffer, strlen(data), 10000);
+	HAL_UART_Transmit(&huart5, (uint8_t *)buffer, strlen(data), 100);
 }
 
 /*
@@ -31,7 +31,7 @@ void usb_send_data(char * data) {
 char * usb_get_data() {
 
 	static char buffer[6];
-	HAL_UART_Receive(&huart5, (uint8_t *)buffer, 12, 10000);
+	HAL_UART_Receive(&huart5, (uint8_t *)buffer, 6, 10000);
 
 	return buffer;
 }

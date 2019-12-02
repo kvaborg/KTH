@@ -16,7 +16,7 @@
 @param uint8_t *, pointer to uint8_t (character) array.
 @return void, no return value
 */
-void backlight_set_color(uint8_t *col) {
+void backlight_set_color(const char *col) {
 
 	if(strcmp(col, "Green") == 0 || strcmp(col, "green") == 0) {
 		HAL_GPIO_WritePin(Disp_Green_GPIO_Port, Disp_Green_Pin, SET);
@@ -25,7 +25,7 @@ void backlight_set_color(uint8_t *col) {
 	} else if(strcmp(col, "White") == 0 || strcmp(col, "white") == 0) {
 		HAL_GPIO_WritePin(Disp_White_GPIO_Port, Disp_White_Pin, SET);
 	} else {
-		// HAL_ERROR?
+		Error_Handler();
 	}
 
 }

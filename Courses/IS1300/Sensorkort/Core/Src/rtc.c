@@ -118,16 +118,16 @@ void HAL_RTC_MspDeInit(RTC_HandleTypeDef* rtcHandle)
 */
 void rtc_set_time(void){
 	usb_send_data("Set the time \"HHMMSS\"");
-	char * user_set_time = usb_get_data();
+	uint8_t * user_set_time = rtc_char_to_int(usb_get_data());
 
 	RTC_TimeTypeDef sTime = {0};
 	RTC_DateTypeDef sDate = {0};
 
 	/** Initialize RTC and set the Time and Date
 	 */
-	sTime.Hours = 0;
-	sTime.Minutes = 0;
-	sTime.Seconds = 0;
+	sTime.Hours = user_set_time[0];
+	sTime.Minutes = user_set_time[1];
+	sTime.Seconds = user_set_time[2];
 	sTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
 	sTime.StoreOperation = RTC_STOREOPERATION_RESET;
 	if (HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BIN) != HAL_OK)
@@ -166,6 +166,30 @@ char * rtc_get_time() {
 
 	/* Display time Format: hh:mm:ss */
 	sprintf((char*)time,"%02d:%02d:%02d",gTime.Hours, gTime.Minutes, gTime.Seconds);
+
+	return time;
+}
+
+/*
+@brief rtc_char_to_int, helper function to convert char input from user to uint8.
+@param void, no parameters
+@return time, the current time as a pointer to uint8 array.
+*/
+uint8_t * rtc_char_to_int(char string[]) {
+	char string_arg[6];
+	strncpy(string_arg, string, 6);
+
+	static uint8_t time[3];
+
+	int i;
+
+	for(i = 0; i < 3; i++) {
+		if((uint8_t)string_arg[i*2] - 0x30 <= 5) {
+			time[i] = ((((uint8_t)string_arg[i*2] - 0x30) * 10) + (((uint8_t)string_arg[i*2+1])) - 0x30); // convert to uint8 and sum
+		} else {
+			Error_Handler();
+		}
+	}
 
 	return time;
 }

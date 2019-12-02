@@ -42,6 +42,7 @@ void MX_RTC_Init(void);
 /* USER CODE BEGIN Prototypes */
 void rtc_set_time(void);
 char * rtc_get_time(void);
+uint8_t * rtc_char_to_int(char *);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

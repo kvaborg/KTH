@@ -9,7 +9,7 @@
  *****************************************************
  */
 
-#include "test_usb.h"
+#include "../Inc/test_usb.h"
 
 char * data = "Serial communication test!";
 

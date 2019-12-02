@@ -9,7 +9,7 @@
  *****************************************************
  */
 
-#include "test_lcd.h"
+#include "../Inc/test_lcd.h"
 
 uint8_t ch = 'a';
 uint8_t string[] = "HLO WORLD!";

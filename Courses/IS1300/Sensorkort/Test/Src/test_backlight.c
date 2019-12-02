@@ -9,11 +9,11 @@
  *****************************************************
  */
 
-#include "test_backlight.h"
+#include "../Inc/test_backlight.h"
 
-uint8_t green[] = "Green";
-uint8_t red[] = "Red";
-uint8_t white[] = "White";
+const char * green = "Green";
+const char * red = "Red";
+const char * white = "White";
 
 /*
 @brief test_backlight_set_color, tests the backlight_set_color function

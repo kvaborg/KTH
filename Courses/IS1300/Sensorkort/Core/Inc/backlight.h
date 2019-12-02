@@ -17,4 +17,4 @@
 #include "stdbool.h"
 #include "string.h"
 
-void backlight_set_color(uint8_t *);
+void backlight_set_color(const char *);
