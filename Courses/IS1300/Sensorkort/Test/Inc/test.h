@@ -8,5 +8,6 @@
 #include "test_display.h"
 #include "test_usb.h"
 #include "test_rtc.h"
+#include "test_adc.h"
 
 void test_program(void);

@@ -27,7 +27,7 @@
 #include "main.h"
 
 /* USER CODE BEGIN Includes */
-#include "stdio.h"
+#include <stdio.h>
 #include "usb.h"
 /* USER CODE END Includes */
 

@@ -21,6 +21,10 @@ const char * white = "White";
 @return void, no return value
 */
 void test_backlight_set_color() {
-	backlight_set_color(white);
+	backlight_set_color(red);
 	HAL_Delay(1000);
+}
+
+void test_backlight_set_brightness(void) {
+	backlight_set_brightness();
 }

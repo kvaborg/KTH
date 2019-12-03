@@ -14,7 +14,7 @@
 #endif
 
 #include "spi.h"
-#include "stdint.h"
+#include <stdint.h>
 
 #define LINE1	0
 #define LINE2	LINE1+0x20

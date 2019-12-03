@@ -23,8 +23,6 @@ void lcd_init() {
 	HAL_GPIO_WritePin(Disp_Reset_GPIO_Port, Disp_Reset_Pin, GPIO_PIN_SET);
 	HAL_Delay(100);
 
-	HAL_GPIO_WritePin(Disp_White_GPIO_Port, Disp_White_Pin, GPIO_PIN_SET);
-
 	lcd_write_instr(0x3A);	//8-Bit data length extension Bit RE=1; REV=0
 	lcd_write_instr(0x09);	//4 line display
 	lcd_write_instr(0x06);	//Bottom view

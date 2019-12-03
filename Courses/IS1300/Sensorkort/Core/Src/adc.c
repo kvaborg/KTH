@@ -39,7 +39,7 @@ void MX_ADC1_Init(void)
   hadc1.Init.Resolution = ADC_RESOLUTION_12B;
   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
   hadc1.Init.ScanConvMode = ADC_SCAN_DISABLE;
-  hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
+  hadc1.Init.EOCSelection = ADC_EOC_SEQ_CONV;
   hadc1.Init.LowPowerAutoWait = DISABLE;
   hadc1.Init.ContinuousConvMode = DISABLE;
   hadc1.Init.NbrOfConversion = 1;
@@ -126,6 +126,23 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
 
 /* USER CODE BEGIN 1 */
 
+/*
+@brief adc_get_value, gets the current value of ADC input from potentiometer.
+@param data, the data to send
+@return g_ADC_val, 32-bit value from ADC register (Range: 0 -> 4017)
+*/
+uint32_t adc_get_value() {
+	HAL_ADC_Start(&hadc1);
+	uint32_t g_ADC_val;
+
+	if (HAL_ADC_PollForConversion(&hadc1, 1000) == HAL_OK) {
+		g_ADC_val = HAL_ADC_GetValue(&hadc1);
+	} else {
+		Error_Handler();
+	}
+
+	return g_ADC_val;
+}
 /* USER CODE END 1 */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

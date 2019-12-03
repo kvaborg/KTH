@@ -13,8 +13,9 @@
 #define TEST_BACKLIGHT_H
 #endif
 
-#include "string.h"
+#include <string.h>
 #include "gpio.h"
 #include "backlight.h"
 
 void test_backlight_set_color(void);
+void test_backlight_set_brightness(void);

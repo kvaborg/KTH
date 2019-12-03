@@ -14,7 +14,7 @@
 #endif
 
 #include "usb.h"
-#include "stdint.h"
+#include <stdint.h>
 
 void test_usb_send_data(void);
 void test_usb_get_data(void);

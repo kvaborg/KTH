@@ -24,6 +24,7 @@
 #include "i2c.h"
 #include "rtc.h"
 #include "spi.h"
+#include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
@@ -99,8 +100,11 @@ int main(void)
   MX_SPI2_Init();
   MX_UART4_Init();
   MX_UART5_Init();
+  MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
 	//init_display();
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
+
 #ifdef RUN_TEST_PROGRAM
 	test_program();
 #else

@@ -13,8 +13,8 @@
 #define USB_H
 #endif
 
-#include "stdint.h"
-#include "string.h"
+#include <stdint.h>
+#include <string.h>
 #include "usart.h"
 
 void usb_send_data(char * data);

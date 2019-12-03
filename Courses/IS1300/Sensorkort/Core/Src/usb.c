@@ -20,13 +20,13 @@ void usb_send_data(char * data) {
 	char * data_terminator = "\n\r";
 	char * buffer = strcat(data, data_terminator);
 
-	HAL_UART_Transmit(&huart5, (uint8_t *)buffer, strlen(data), 100);
+	HAL_UART_Transmit(&huart5, (uint8_t *)buffer, strlen(buffer), 100);
 }
 
 /*
 @brief usb_get_data, receives an amount of data in blocking mode using UART over USB
 @param void, no parameters
-@return buffer, a pointer to an array of length 10 with the data received.
+@return buffer, a pointer to an array of length 6 with the data received.
 */
 char * usb_get_data() {
 

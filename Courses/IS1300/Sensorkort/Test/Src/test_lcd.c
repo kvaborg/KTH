@@ -12,7 +12,7 @@
 #include "../Inc/test_lcd.h"
 
 uint8_t ch = 'a';
-uint8_t string[] = "HLO WORLD!";
+char string[] = "HLO WORLD!";
 
 /*
 @brief test_lcd_init, tests lcd_init function

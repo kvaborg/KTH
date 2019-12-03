@@ -15,7 +15,7 @@
 
 #include "rtc.h"
 
-#include "stdint.h"
+#include <stdint.h>
 #include "spi.h"
 #include "lcd.h"
 #include "backlight.h"
