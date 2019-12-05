@@ -11,20 +11,29 @@
 
 #include "../Inc/test_backlight.h"
 
-const char * green = "Green";
-const char * red = "Red";
-const char * white = "White";
+//const char * green = "Green";
+//const char * red = "Red";
+//const char * white = "White";
 
 /*
 @brief test_backlight_set_color, tests the backlight_set_color function
 @param void, no parameters
 @return void, no return value
-*/
+ */
 void test_backlight_set_color() {
-	backlight_set_color(red);
+	backlight_set_color("White");
+	HAL_Delay(1000);
+	backlight_set_color("Green");
+	HAL_Delay(1000);
+	backlight_set_color("Red");
 	HAL_Delay(1000);
 }
 
+/*
+@brief test_backlight_set_brightness, tests the backlight_set_brightness function
+@param void, no parameters
+@return void, no return value
+ */
 void test_backlight_set_brightness(void) {
-	backlight_set_brightness();
+		backlight_set_brightness();
 }

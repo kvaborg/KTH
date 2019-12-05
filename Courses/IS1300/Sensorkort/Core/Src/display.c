@@ -5,7 +5,7 @@
  @author Alexander Borg
  @version 1.0
  @date 28-November-2019
- @brief Source code for Display
+ @brief Source code for Display.
  *****************************************************
  */
 
@@ -16,7 +16,6 @@
 @param void, no parameters
 @return void, no return value
 */
-
 void display_time() {
 	char * time = rtc_get_time();
 	lcd_set_pos(LINE1);

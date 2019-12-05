@@ -41,7 +41,7 @@ void lcd_write_data(uint8_t data);
 void lcd_write_instr(uint8_t instr);
 void lcd_clear(void);
 void lcd_set_pos(uint8_t pos);
-void lcd_write_char(uint8_t ch);
+void lcd_write_char(int8_t ch);
 void lcd_write_string(char * string);
 void lcd_on_off(uint8_t data);
 void lcd_set_contrast(uint8_t contr);

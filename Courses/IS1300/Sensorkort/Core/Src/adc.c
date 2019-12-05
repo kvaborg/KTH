@@ -128,8 +128,8 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
 
 /*
 @brief adc_get_value, gets the current value of ADC input from potentiometer.
-@param data, the data to send
-@return g_ADC_val, 32-bit value from ADC register (Range: 0 -> 4017)
+@param void, no parameter
+@return uint32_t, 32-bit value from ADC register (Range: 0 -> 4017)
 */
 uint32_t adc_get_value() {
 	HAL_ADC_Start(&hadc1);
@@ -143,6 +143,7 @@ uint32_t adc_get_value() {
 
 	return g_ADC_val;
 }
+
 /* USER CODE END 1 */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

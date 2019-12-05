@@ -2,10 +2,12 @@
 
 void test_adc_get_value() {
 	int i;
+	char adc_str[10];
 
 	for(i = 0; i < 10; i++) {
-		uint32_t val = adc_get_value();
-		usb_send_data(val);
-		HAL_Delay(100);
+		int val = adc_get_value();
+		sprintf(adc_str, "%d", val);
+		usb_send_data(adc_str);
+		HAL_Delay(1000);
 	}
 }

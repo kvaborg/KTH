@@ -1,6 +1,6 @@
 /**
  *****************************************************
- @brief test, test-program
+ @brief test, main test program
  @file test.c
  @author Alexander Borg
  @version 1.0
@@ -17,25 +17,27 @@
 @return void, no return value
  */
 void test_program() {
-	//test_set_color();
+	/* ADC TEST */
+	test_adc_get_value();
+
+	/* USB TEST */
+	test_usb_send_data();
+	HAL_Delay(1000);
+	test_usb_get_data();
+	HAL_Delay(10);
+
+	/* LCD, DISPLAY AND BACKLIGHT TESTS */
 	test_lcd_init();
 	HAL_Delay(100);
-	//	HAL_GPIO_WritePin(GPIOC, Disp_Red_Pin, GPIO_PIN_SET);
+	test_lcd_clear();
+	HAL_Delay(100);
+	test_lcd_on_off();
+	test_lcd_clear();
+	HAL_Delay(100);
+	test_lcd_write_string();
+	test_lcd_write_char();
 	test_backlight_set_color();
-	HAL_Delay(10);
-	//	test_rtc_string_to_int();
-	//	test_lcd_clear();
-	//	HAL_Delay(1000);
-	//	test_lcd_on_off();
-	//	HAL_Delay(1000);
-	//	test_lcd_set_ROM();
-	//	HAL_Delay(1000);
-	//	test_lcd_set_pos();
-	//	HAL_Delay(1000);
-	//	test_lcd_write_string();
-	//	HAL_Delay(5000);
-	//	test_lcd_write_char();
-	//	test_adc_get_value();
+	test_lcd_clear();
 	test_rtc_set_time();
 	while(1) {
 		test_backlight_set_brightness();

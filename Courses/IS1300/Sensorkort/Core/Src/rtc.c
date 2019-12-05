@@ -139,8 +139,13 @@ void HAL_RTC_MspDeInit(RTC_HandleTypeDef* rtcHandle)
 @return void, no return value
  */
 void rtc_set_time(void){
-	usb_send_data("Set the time \"HHMMSS\"");
+	usb_send_data("Set the clock \"HHMMSS\"");
 	uint8_t * user_set_time = rtc_char_to_int(usb_get_data());
+
+	if(user_set_time != NULL) {
+		usb_send_data("The clock was set successfully");
+	}
+
 
 	RTC_TimeTypeDef sTime = {0};
 	RTC_DateTypeDef sDate = {0};
@@ -176,7 +181,7 @@ void rtc_set_time(void){
 /*
 @brief rtc_get_time, Fetches the current time from RTC time and date registers.
 @param void, no parameters
-@return time, the current time as a string.
+@return char *, the current time as a pointer to a char array.
  */
 char * rtc_get_time() {
 
@@ -199,7 +204,7 @@ char * rtc_get_time() {
 /*
 @brief rtc_char_to_int, helper function to convert char input from user to uint8.
 @param void, no parameters
-@return time, the current time as a pointer to uint8 array.
+@return uint8_t *, the current time as a pointer to uint8_t array.
  */
 uint8_t * rtc_char_to_int(char * string) {
 	char string_arg[6];

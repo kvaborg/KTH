@@ -1,6 +1,6 @@
 /**
  *****************************************************
- @brief Usb, USB communication
+ @brief Usb, USB communication library functions
  @file usb.c
  @author Alexander Borg
  @version 1.0
@@ -13,7 +13,7 @@
 
 /*
 @brief usb_send_data, sends an amount of data in blocking mode using UART over USB.
-@param data, the data to send
+@param char *, pointer to char array holding the data to send
 @return void, no return value
 */
 void usb_send_data(char * data) {
@@ -26,7 +26,7 @@ void usb_send_data(char * data) {
 /*
 @brief usb_get_data, receives an amount of data in blocking mode using UART over USB
 @param void, no parameters
-@return buffer, a pointer to an array of length 6 with the data received.
+@return char *, a pointer to a char array of length 6 with the data received.
 */
 char * usb_get_data() {
 

@@ -102,7 +102,7 @@ int main(void)
   MX_UART5_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
-	//init_display();
+
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
 
 #ifdef RUN_TEST_PROGRAM
@@ -207,6 +207,7 @@ void Error_Handler(void)
 	backlight_set_color("red");
 	lcd_write_string(err_msg);
 	HAL_Delay(10000);
+	lcd_clear();
   /* USER CODE END Error_Handler_Debug */
 }
 
