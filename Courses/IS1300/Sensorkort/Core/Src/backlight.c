@@ -12,7 +12,7 @@
 #include "backlight.h"
 
 /*
-@brief backlight_set_color, sets the color of the backlight White/Green/Red
+@brief backlight_set_color, sets the color of the backlight White/Green/Red. Setting one color will turn the other color LEDs off.
 @param const char *, pointer to char array.
 @return void, no return value
 */
@@ -36,7 +36,7 @@ void backlight_set_color(const char *col) {
 }
 
 /*
-@brief backlight_set_brightness, sets the brightness of the back light (Red only)
+@brief backlight_set_brightness, sets the brightness of the back light (Red only) according to ADC value.
 @param void, no parameter
 @return void, no return value
 */
