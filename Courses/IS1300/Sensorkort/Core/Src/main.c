@@ -41,7 +41,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define RUN_TEST_PROGRAM
+//#define RUN_TEST_PROGRAM
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -95,8 +95,8 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_ADC1_Init();
-  MX_I2C3_Init();
   MX_RTC_Init();
+  MX_I2C3_Init();
   MX_SPI2_Init();
   MX_UART4_Init();
   MX_UART5_Init();
@@ -108,7 +108,7 @@ int main(void)
 #ifdef RUN_TEST_PROGRAM
 	test_program();
 #else
-	//Pingpong();
+	sensorkort();
 #endif
 
   /* USER CODE END 2 */

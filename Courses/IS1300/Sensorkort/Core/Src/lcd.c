@@ -35,6 +35,7 @@ void lcd_init() {
 	lcd_write_instr(0x38); //8 bit data length extension Bit RE=0; IS=0
 
 	lcd_clear();
+	lcd_set_ROM(ROMA);
 	lcd_on_off(DISPLAY_ON);
 }
 

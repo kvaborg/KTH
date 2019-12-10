@@ -57,7 +57,7 @@ volatile void hts_get_calib() {
 	//	HAL_Delay(100);
 
 	config[0] = 0x20;
-	config[1] = 0x87;
+	config[1] = 0x85;
 
 	HAL_I2C_Master_Transmit(&hi2c3, hts221.DevAddr, config, 2, HAL_MAX_DELAY);
 	HAL_Delay(100);
@@ -149,7 +149,6 @@ volatile void hts_get_calib() {
 
 uint8_t * hts_get_hum_temp(void) {
 	HAL_StatusTypeDef ret;
-
 	uint8_t val[4];
 	uint8_t reg[1];
 	static uint8_t ret_buf[12];
@@ -160,11 +159,11 @@ uint8_t * hts_get_hum_temp(void) {
 	ret = HAL_I2C_Master_Transmit(&hi2c3, hts221.DevAddr, reg, 1, HAL_MAX_DELAY);
 
 	if(ret != HAL_OK) {
-		strcpy((char *)ret_buf, "Error Tx \r\n");
+		strcpy((char *)ret_buf, "Err Tx \r\n");
 	} else {
 		ret = HAL_I2C_Master_Receive(&hi2c3, hts221.DevAddr, val, 4, HAL_MAX_DELAY);
 		if (ret != HAL_OK) {
-			strcpy((char *)ret_buf, "Error Rx \r\n");
+			strcpy((char *)ret_buf, "Err Rx \r\n");
 		} else {
 
 			// Convert the temperature data
@@ -175,8 +174,7 @@ uint8_t * hts_get_hum_temp(void) {
 			h_out = (val[1] << 8) | val[0];
 			hum = (hts221.H0_rh + ((h_out - hts221.H0_out) * (hts221.H1_rh - hts221.H0_rh)) / (hts221.H1_out - hts221.H0_out));
 
-
-			sprintf((char *)ret_buf, "TEMP = %02i HUM = %02i", (int)temp, (int)hum);
+			sprintf((char *)ret_buf, "T=%02i H=%02i", (int)temp, (int)hum);
 		}
 	}
 

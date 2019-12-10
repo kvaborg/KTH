@@ -19,5 +19,6 @@
 #include "spi.h"
 #include "lcd.h"
 #include "backlight.h"
+#include "sensors.h"
 
-void display_time(void);
+void display_all(void);
