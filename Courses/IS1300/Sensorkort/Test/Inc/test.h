@@ -9,5 +9,6 @@
 #include "test_usb.h"
 #include "test_rtc.h"
 #include "test_adc.h"
+#include "test_sensors.h"
 
 void test_program(void);
