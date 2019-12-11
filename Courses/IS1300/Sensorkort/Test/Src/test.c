@@ -18,7 +18,8 @@
  */
 void test_program() {
 	/* I2C TEST */
-	test_hts_get_hum_temp();
+	test_lis3_get_xyz();
+	//test_hts_get_hum_temp();
 
 	/* ADC TEST */
 //	test_adc_get_value();

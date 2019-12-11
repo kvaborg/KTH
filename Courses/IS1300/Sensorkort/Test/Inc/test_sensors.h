@@ -6,3 +6,4 @@
 #include <sensors.h>
 
 void test_hts_get_hum_temp(void);
+void test_lis3_get_angle(void);

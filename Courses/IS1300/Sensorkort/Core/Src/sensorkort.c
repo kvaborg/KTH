@@ -16,9 +16,11 @@ void sensorkort() {
 	rtc_set_time();
 	hts_init();
 	hts_get_calib();
+	lis3_init();
 
 	while(1) {
 		backlight_set_brightness();
+		lis3_get_xyz();
 		display_all();
 	}
 }

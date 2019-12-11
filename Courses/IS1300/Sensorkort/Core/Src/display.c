@@ -23,4 +23,5 @@ void display_all() {
 	lcd_set_pos(LINE2);
 	lcd_write_string((char *)hts_get_hum_temp());
 	lcd_set_pos(LINE3);
+	lcd_write_string((char *)lis3_calc_angle());
 }
