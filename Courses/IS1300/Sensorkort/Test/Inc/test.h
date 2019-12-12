@@ -6,7 +6,7 @@
 #include "test_lcd.h"
 #include "test_backlight.h"
 #include "test_display.h"
-#include "test_usb.h"
+#include "test_serial_com.h"
 #include "test_rtc.h"
 #include "test_adc.h"
 #include "test_sensors.h"

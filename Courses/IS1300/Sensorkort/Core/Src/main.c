@@ -32,6 +32,7 @@
 /* USER CODE BEGIN Includes */
 #include "stdint.h"
 #include "display.h"
+#include "sensorkort.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/

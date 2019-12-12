@@ -22,5 +22,6 @@ void sensorkort() {
 		backlight_set_brightness();
 		lis3_get_xyz();
 		display_all();
+		com_all();
 	}
 }

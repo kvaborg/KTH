@@ -1,15 +1,15 @@
 /**
  *****************************************************
- @brief Test USB, USB communication tests
+ @brief Test COM, Communication tests
  @file test_usb.c
  @author Alexander Borg
  @version 1.0
  @date 29-November-2019
- @brief Source code for USB communication tests
+ @brief Source code for USB and BT communication tests
  *****************************************************
  */
 
-#include "../Inc/test_usb.h"
+#include "../Inc/test_serial_com.h"
 
 char * data = "Serial communication test!";
 
@@ -30,4 +30,8 @@ void test_usb_send_data() {
 void test_usb_get_data(void) {
 	char * data = usb_get_data();
 	usb_send_data((char *)data);
+}
+
+void test_bt_send_data(void) {
+	bt_send_data(data);
 }

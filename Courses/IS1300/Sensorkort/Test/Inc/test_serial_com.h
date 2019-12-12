@@ -13,8 +13,9 @@
 #define TEST_USB_H
 #endif
 
-#include "usb.h"
+#include <usb.h>
 #include <stdint.h>
 
 void test_usb_send_data(void);
 void test_usb_get_data(void);
+void test_bt_send_data(void);

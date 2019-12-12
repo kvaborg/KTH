@@ -19,6 +19,7 @@
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __rtc_H
 #define __rtc_H
+
 #ifdef __cplusplus
  extern "C" {
 #endif
@@ -28,12 +29,15 @@
 
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
-#include "usb.h"
+#include <usb.h>
 /* USER CODE END Includes */
 
 extern RTC_HandleTypeDef hrtc;
 
 /* USER CODE BEGIN Private defines */
+
+RTC_DateTypeDef gDate;
+RTC_TimeTypeDef gTime;
 
 /* USER CODE END Private defines */
 

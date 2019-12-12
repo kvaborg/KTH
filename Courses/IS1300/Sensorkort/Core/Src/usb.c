@@ -1,7 +1,7 @@
 /**
  *****************************************************
- @brief Usb, USB communication library functions
- @file usb.c
+ @brief USB, USB Communication library functions
+ @file com.c
  @author Alexander Borg
  @version 1.0
  @date 29-November-2019
@@ -9,7 +9,7 @@
  *****************************************************
  */
 
-#include "usb.h"
+#include <usb.h>
 
 /*
 @brief usb_send_data, sends an amount of data in blocking mode using UART over USB.

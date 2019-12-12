@@ -146,7 +146,6 @@ void rtc_set_time(void){
 		usb_send_data("The clock was set successfully");
 	}
 
-
 	RTC_TimeTypeDef sTime = {0};
 	RTC_DateTypeDef sDate = {0};
 
@@ -160,7 +159,7 @@ void rtc_set_time(void){
 		sTime.StoreOperation = RTC_STOREOPERATION_RESET;
 		if (HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BIN) != HAL_OK)
 		{
-			Error_Handler();
+			usb_send_data("SetTime Error");
 		}
 		sDate.WeekDay = RTC_WEEKDAY_MONDAY;
 		sDate.Month = RTC_MONTH_JANUARY;
@@ -169,10 +168,11 @@ void rtc_set_time(void){
 
 		if (HAL_RTC_SetDate(&hrtc, &sDate, RTC_FORMAT_BIN) != HAL_OK)
 		{
-			Error_Handler();
+			usb_send_data("Set date error!");
 		}
 	} else {
-		Error_Handler();
+		usb_send_data("Invalid time");
+		rtc_set_time();
 	}
 
 	HAL_RTCEx_BKUPWrite(&hrtc, RTC_BKP_DR1, 0x32F2); // Write to backup register
@@ -184,9 +184,6 @@ void rtc_set_time(void){
 @return char *, the current time as a pointer to a char array.
  */
 char * rtc_get_time() {
-
-	RTC_DateTypeDef gDate;
-	RTC_TimeTypeDef gTime;
 
 	static char time[10];
 

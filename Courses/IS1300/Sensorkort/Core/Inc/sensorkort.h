@@ -9,6 +9,7 @@
  *****************************************************
  */
 
+#include "usb.h"
 #include "rtc.h"
 #include "backlight.h"
 #include "lcd.h"

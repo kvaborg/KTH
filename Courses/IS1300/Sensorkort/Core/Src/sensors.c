@@ -212,11 +212,11 @@ uint8_t * hts_get_hum_temp(void) {
 			strcpy((char *)ret_buf, "Err Rx \r\n");
 		} else {
 
-			// Convert the temperature data
+			// Convert and interpolate the temperature data
 			t_out = (val[3] << 8) | val[2];
 			temp = (hts221.T0_degC + ((t_out - hts221.T0_out) * (hts221.T1_degC - hts221.T0_degC)) / (hts221.T1_out - hts221.T0_out));
 
-			// Convert the humidity data
+			// Convert and interpolate the humidity data
 			h_out = (val[1] << 8) | val[0];
 			hum = (hts221.H0_rh + ((h_out - hts221.H0_out) * (hts221.H1_rh - hts221.H0_rh)) / (hts221.H1_out - hts221.H0_out));
 
@@ -248,7 +248,7 @@ void lis3_init(void) {
 @param void, no return value.
 @return void, no return value.
  */
-void lis3_get_xyz(void) {
+volatile void lis3_get_xyz(void) {
 	HAL_StatusTypeDef ret;
 	uint8_t config[4];
 	uint8_t reg[1];

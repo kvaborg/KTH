@@ -17,5 +17,5 @@
 #include <string.h>
 #include "usart.h"
 
-void usb_send_data(char * data);
+void usb_send_data(char *);
 char * usb_get_data(void);
