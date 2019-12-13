@@ -294,17 +294,21 @@ volatile void lis3_get_xyz(void) {
 @return uint8_t *, pointer to char array containing the angles for X and Y relative to Z.
  */
 uint8_t * lis3_calc_angle() {
-	double angle_x_rad, angle_y_rad;
-	int8_t angle_x, angle_y;
+	double angle_x_rad, angle_y_rad, angle_z_rad;
+	int8_t angle_x, angle_y, angle_z;
 	static uint8_t ret_buf[10];
 
 	angle_x_rad = atan(lis3dsh.out_X / (sqrt(pow(lis3dsh.out_Y, 2) + pow(lis3dsh.out_Z, 2))));
 	angle_y_rad = atan(lis3dsh.out_Y / (sqrt(pow(lis3dsh.out_X, 2) + pow(lis3dsh.out_Z, 2))));
+	angle_z_rad = acos(lis3dsh.out_Z / (sqrt(pow(lis3dsh.out_X, 2) + pow(lis3dsh.out_Y, 2) + pow(lis3dsh.out_Z, 2))));
 
 	angle_x = 90 - (uint8_t)fabs(angle_x_rad * 180.0 / M_PI);
 	angle_y = 90 - (uint8_t)fabs(angle_y_rad * 180.0 / M_PI);
+	angle_z = (uint8_t)fabs(angle_z_rad * 180.0 / M_PI);
 
-	sprintf((char *)ret_buf, "X=%02u Y=%02u", (unsigned int)angle_x, (unsigned int)angle_y);
+//	sprintf((char *)ret_buf, "X=%02u Y=%02u", (unsigned int)angle_x, (unsigned int)angle_y);
+	sprintf((char *)ret_buf, "> %02u", (unsigned int)angle_z);
 
+	usb_send_data((char *)ret_buf);
 	return ret_buf;
 }

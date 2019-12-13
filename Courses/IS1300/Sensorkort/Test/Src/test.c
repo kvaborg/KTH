@@ -18,7 +18,7 @@
  */
 void test_program() {
 	/* I2C TEST */
-//	test_lis3_get_angle();
+	test_lis3_calc_angle();
 	//test_hts_get_hum_temp();
 
 	/* ADC TEST */
@@ -29,7 +29,7 @@ void test_program() {
 //	HAL_Delay(1000);
 //	test_usb_get_data();
 //	HAL_Delay(10);
-	test_bt_send_data();
+//	test_bt_send_data();
 //
 //	/* LCD, DISPLAY AND BACKLIGHT TESTS */
 //	test_lcd_init();

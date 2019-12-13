@@ -42,7 +42,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-//#define RUN_TEST_PROGRAM
+#define RUN_TEST_PROGRAM
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -105,6 +105,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
+#undef RUN_TEST_PROGRAM
 
 #ifdef RUN_TEST_PROGRAM
 	test_program();
