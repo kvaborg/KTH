@@ -11,7 +11,7 @@
 
 #include <usb.h>
 
-/*
+/**
 @brief usb_send_data, sends an amount of data in blocking mode using UART over USB.
 @param char *, pointer to char array holding the data to send
 @return void, no return value
@@ -23,7 +23,7 @@ void usb_send_data(char * data) {
 	HAL_UART_Transmit(&huart5, (uint8_t *)buffer, strlen(buffer), 100);
 }
 
-/*
+/**
 @brief usb_get_data, receives an amount of data in blocking mode using UART over USB
 @param void, no parameters
 @return char *, a pointer to a char array of length 6 with the data received.

@@ -1,3 +1,13 @@
+/**
+ *****************************************************
+ @brief Test, test header file.
+ @file test.h
+ @author Alexander Borg
+ @version 1.0
+ @date 12-December-2019
+ @brief Header file for main test program.
+ *****************************************************
+ */
 
 #ifndef TEST_H
 #define TEST_H

@@ -1,3 +1,14 @@
+/**
+ *****************************************************
+ @brief Sensors, sensors header file.
+ @file sensors.h
+ @author Alexander Borg
+ @version 1.0
+ @date 12-December-2019
+ @brief Header file for Sensors library functions.
+ *****************************************************
+ */
+
 #ifndef HTS_H
 #define HTS_H
 #endif

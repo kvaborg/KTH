@@ -11,7 +11,7 @@
 
 #include "lcd.h"
 
-/*
+/**
 @brief lcd_init, inits the lcd through a series of instructions
 @param void, no parameters
 @return void, no return value
@@ -39,7 +39,7 @@ void lcd_init() {
 	lcd_on_off(DISPLAY_ON);
 }
 
-/*
+/**
 @brief lcd_write_instr, writes instructions to the LCD. RS = 0, R/W = 0
 @param uint8_t, the instruction to send to the LCD
 @return void, no return value
@@ -64,7 +64,7 @@ void lcd_write_instr(uint8_t instr) {
 	}
 }
 
-/*
+/**
 @brief lcd_write_data, writes data to the LCD, RS = 1 R/W = 1
 @param uint8_t, data to write to the LCD
 @return void, no return value
@@ -90,7 +90,7 @@ void lcd_write_data(uint8_t data) {
 	}
 }
 
-/*
+/**
 @brief lcd_clear, clears the display and sets the cursor position on line 1
 @param void, no parameters
 @return void, no return value
@@ -101,7 +101,7 @@ void lcd_clear()
 	lcd_set_pos(LINE1);
 }
 
-/*
+/**
 @brief lcd_set_pos, sets position of cursor
 @param uint8_t, the position
 @return void, no return value
@@ -110,7 +110,7 @@ void lcd_set_pos(uint8_t pos) {
 	lcd_write_instr(LCD_HOME_L1+pos);
 }
 
-/*
+/**
 @brief lcd_write_char, writes a charachter to the LCD
 @param uint8_t, the character to write to the LCD
 @return void, no return value
@@ -119,7 +119,7 @@ void lcd_write_char(int8_t ch) {
 	lcd_write_data(ch);
 }
 
-/*
+/**
 @brief lcd_write_string, writes a string to the LCD
 @param string, pointer to the string to write
 @return void, no return value
@@ -132,7 +132,7 @@ void lcd_write_string(char * string) {
 	while(*string);
 }
 
-/*
+/**
 @brief lcd_on_off, turns the display on or off
 @param data, pointer to the string to write
 @return void, no return value
@@ -141,7 +141,7 @@ void lcd_on_off(uint8_t data) {
 	lcd_write_instr(0x08+data);
 }
 
-/*
+/**
 @brief lcd_set_contrast, sets the contrast on the LCD
 @param uint8_t, contrast value (DB3-DB0=C3-C0)
 @return void, no return value
@@ -153,7 +153,7 @@ void lcd_set_contrast(uint8_t contr) {
 	lcd_write_instr(0x38);
 }
 
-/*
+/**
 @brief lcd_set_ROM, sets the character set (ROMA=0x00, ROMB=0x04, ROMC=0x0C)
 @param uint8_t, ROM to select.
 @return void, no return value

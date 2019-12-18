@@ -133,7 +133,7 @@ void HAL_RTC_MspDeInit(RTC_HandleTypeDef* rtcHandle)
 
 /* USER CODE BEGIN 1 */
 
-/*
+/**
 @brief rtc_set_time, sets the RTC according to user input over USB and UART.
 @param void, no parameters
 @return void, no return value
@@ -149,8 +149,7 @@ void rtc_set_time(void){
 	RTC_TimeTypeDef sTime = {0};
 	RTC_DateTypeDef sDate = {0};
 
-	/** Initialize RTC and set the Time and Date
-	 */
+	/* Initialize RTC and set the Time and Date */
 	if(user_set_time[0] <= 23 && user_set_time[1] <= 59 && user_set_time[2] <= 59) {
 		sTime.Hours = user_set_time[0];
 		sTime.Minutes = user_set_time[1];
@@ -178,7 +177,7 @@ void rtc_set_time(void){
 	HAL_RTCEx_BKUPWrite(&hrtc, RTC_BKP_DR1, 0x32F2); // Write to backup register
 }
 
-/*
+/**
 @brief rtc_get_time, Fetches the current time from RTC time and date registers.
 @param void, no parameters
 @return char *, the current time as a pointer to a char array.
@@ -198,7 +197,7 @@ char * rtc_get_time() {
 	return time;
 }
 
-/*
+/**
 @brief rtc_char_to_int, helper function to convert char input from user to uint8.
 @param void, no parameters
 @return uint8_t *, the current time as a pointer to uint8_t array.

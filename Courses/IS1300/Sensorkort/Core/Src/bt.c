@@ -11,7 +11,7 @@
 
 #include "bt.h"
 
-/*
+/**
 @brief bt_send_data, sends an amount of data in blocking mode using UART over bluetooth.
 @param char *, pointer to char array holding the data to send
 @return void, no return value

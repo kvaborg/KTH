@@ -11,11 +11,7 @@
 
 #include "../Inc/test_backlight.h"
 
-//const char * green = "Green";
-//const char * red = "Red";
-//const char * white = "White";
-
-/*
+/**
 @brief test_backlight_set_color, tests the backlight_set_color function
 @param void, no parameters
 @return void, no return value

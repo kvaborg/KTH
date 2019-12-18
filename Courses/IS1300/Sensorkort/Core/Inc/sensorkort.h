@@ -9,7 +9,9 @@
  *****************************************************
  */
 
+#include "serial_com.h"
 #include "usb.h"
+#include "bt.h"
 #include "rtc.h"
 #include "backlight.h"
 #include "lcd.h"

@@ -1,7 +1,7 @@
 /**
  *****************************************************
  @brief test_lcd, Header file for LCD test program
- @file lcd.h
+ @file test_lcd.h
  @author Alexander Borg
  @version 1.0
  @date 28-November-2019

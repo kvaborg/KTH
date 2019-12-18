@@ -63,7 +63,7 @@ typedef struct {
 LIS3DSH_TypeDef lis3dsh;
 HTS221_TypeDef hts221;
 
-/*
+/**
 @brief hts_init, inits the HTS221_TypeDef struct by assingning register adresses.
 @param void, no parameter.
 @return void, no return value.
@@ -82,7 +82,7 @@ void hts_init() {
 	hts221.T1_OUT = 0xBE; // Read 2 bytes msb, ls. Auto increment set.
 }
 
-/*
+/**
 @brief hts_get_calib, gets the necessary calibration values before first temp and hum calculations.
 @param void, no parameter.
 @return void, no return value
@@ -188,7 +188,7 @@ volatile void hts_get_calib() {
 	hts221.T1_out = (data_1 << 8) | data_0;
 }
 
-/*
+/**
 @brief hts_get_hum_temp, gets temp and hum values from H_OUT and T_OUT and calculates the current temp and hum using linear interpolation.
 @param void, no return value
 @return uint8_t *, pointer to string with values for current temp and hum.
@@ -228,7 +228,7 @@ uint8_t * hts_get_hum_temp(void) {
 	return ret_buf;
 }
 
-/*
+/**
 @brief lis3_init, inits the LIS3DSH_TypeDef struct by assigning register addresses.
 @param void, no return value.
 @return void, no return value.
@@ -243,7 +243,7 @@ void lis3_init(void) {
 	lis3dsh.OUT_XYZ = 0x28;
 }
 
-/*
+/**
 @brief lis3_get_xyz, gets values from OUT_X, OUT_Y and OUT_Z registers in order to calculate angles.
 @param void, no return value.
 @return void, no return value.
@@ -288,7 +288,7 @@ volatile void lis3_get_xyz(void) {
 	}
 }
 
-/*
+/**
 @brief lis3_calc_angle, calculates X and X angles from Z based on lis3_get_xyz values.
 @param void, no return value.
 @return uint8_t *, pointer to char array containing the angles for X and Y relative to Z.

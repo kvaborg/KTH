@@ -37,12 +37,12 @@
 #define MAX_BUFFER_SIZE 3
 
 void lcd_init(void);
-void lcd_write_data(uint8_t data);
-void lcd_write_instr(uint8_t instr);
+void lcd_write_data(uint8_t);
+void lcd_write_instr(uint8_t);
 void lcd_clear(void);
-void lcd_set_pos(uint8_t pos);
-void lcd_write_char(int8_t ch);
-void lcd_write_string(char * string);
-void lcd_on_off(uint8_t data);
-void lcd_set_contrast(uint8_t contr);
-void lcd_set_ROM(uint8_t rom);
+void lcd_set_pos(uint8_t);
+void lcd_write_char(int8_t);
+void lcd_write_string(char *);
+void lcd_on_off(uint8_t);
+void lcd_set_contrast(uint8_t);
+void lcd_set_ROM(uint8_t);

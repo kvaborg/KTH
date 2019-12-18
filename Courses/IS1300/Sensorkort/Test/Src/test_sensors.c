@@ -10,7 +10,7 @@
  */
 #include "../Inc/test_sensors.h"
 
-/*
+/**
 @brief test_hts_get_hum_temp, tests the hts_get_hum_temp fucntion
 @param void, no parameters
 @return void, no return value

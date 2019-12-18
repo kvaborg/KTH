@@ -11,7 +11,7 @@
 
 #include "display.h"
 
-/*
+/**
 @brief display_all, prints all information to the display (Time, humidity, temperature).
 @param void, no parameters
 @return void, no return value

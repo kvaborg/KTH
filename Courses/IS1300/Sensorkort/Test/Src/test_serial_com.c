@@ -13,7 +13,7 @@
 
 char * data = "Serial communication test!";
 
-/*
+/**
 @brief test_usb_send_data, tests the usb_send_data function
 @param void, no parameters
 @return void, no parameters
@@ -22,8 +22,9 @@ void test_usb_send_data() {
 	usb_send_data(data);
 }
 
-/*
+/**
 @brief test_usb_get_data, tests the usb_get_data function
+@brief Sends the data over serial USB on success.
 @param void, no parameters
 @return void, no parameters
 */
@@ -32,6 +33,12 @@ void test_usb_get_data(void) {
 	usb_send_data((char *)data);
 }
 
+/**
+@brief test_bt_send_data, tests the bt_send_data function.
+@brief Sends the data over serial bluetooth on success.
+@param void, no parameters
+@return void, no parameters
+*/
 void test_bt_send_data(void) {
 	bt_send_data(data);
 }

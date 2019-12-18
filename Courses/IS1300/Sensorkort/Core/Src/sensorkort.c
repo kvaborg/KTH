@@ -11,6 +11,11 @@
 
 #include "sensorkort.h"
 
+/**
+@brief sensorkort, main program function.
+@param void, no parameter.
+@return void, no return value.
+ */
 void sensorkort() {
 	lcd_init();
 	rtc_set_time();
