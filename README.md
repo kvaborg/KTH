@@ -1,1 +1,1 @@
-# KTH-projects
+# KTH Courses
