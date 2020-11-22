@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <errno.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -9,7 +10,7 @@
 #define FALSE 0
 
 #define HEAD (sizeof(struct head))
-#define MIN(size) (((size) < (8))?(size):(8))
+#define MIN(size) (((size) > (8))?(size):(8))
 #define LIMIT(size) (MIN(0) + HEAD + size)
 #define MAGIC(memory) ((struct head*)memory - 1)
 #define HIDE(block) (void *)((struct head*)block + 1)
@@ -52,7 +53,7 @@ struct head *split(struct head *block, int size) {
 
 struct head *arena = NULL;
 
-struct head *new() {
+struct head *new_arena() {
   if (arena != NULL) {
     printf("one arena already allocated \n");
     return NULL;
@@ -89,16 +90,17 @@ struct head *new() {
 }
 
 /* create free list */
-struct head *flist;
+struct head *flist = NULL;
 
+/* detach block from freelist. Update pointers of next and prev */
 void detach(struct head *block) {
   if (block->next != NULL) {
     block->next->prev = block->prev;
-  }
+  } 
   if (block->prev != NULL) {
     block->prev->next = block->next;
   } else {
-    block->next->prev = NULL;
+    flist = block->next;
   }
 }
 
@@ -106,6 +108,9 @@ void insert(struct head *block) {
   block->next = flist;
   block->prev = NULL;
 
+  /* if the freelist is NOT empty, insert block first in list and update refs
+   * and values of flist
+  */
   if(flist != NULL) {
     flist->prev = block;  
   }
@@ -115,6 +120,7 @@ void insert(struct head *block) {
 
 int adjust(size_t request) {
 
+  /* if request < 8 -> request = 8 */
   int newRequestSize = MIN(request);
 
   /* Adjust request in order to fit with ALIGN */
@@ -127,26 +133,47 @@ int adjust(size_t request) {
 
 }
 
+/* find a block that fits the requested size */
 struct head *find(int size) {
   if (flist == NULL) {
+    printf("FLIST EMPTY\n");
     return NULL;
   }
 
+  /* the order of procedure follows the algorithm:
+   * - Go through freelist and find suitable block. If found -> detach
+   * - Can we split the found block in two? If yes -> split and insert
+   *   remaining back into freelist
+   * - Mark found block as taken and update props + props of block after
+   * - return pointer to beginning of data segment i.e. by hiding header
+  */  
   struct head *freelist = flist;
+  printf("BEFORE WHILE\n");
   while (freelist) {
+    printf("ENTERING WHILE\n");
     if (freelist->size >= size) {
+      printf("ENTERING freelist->size >= size\n");
       detach(freelist);
-      if (freelist->size >= size + HEAD +MIN(0)) {
+      if (freelist->size >= LIMIT(size)) {
+        printf("lets split the block!\n");
         struct head *block = split(freelist, size);
-        after(block)->bfree = block->prev->free;      
+        struct head *aft = after(block);
+        aft->bfree = FALSE;      
+        aft->bsize = block->size; 
         insert(freelist);
-        return block;
+        return HIDE(block);
       } else {
-        return freelist;
+        freelist->free = FALSE;
+        struct head *aft = after(freelist);
+        aft->bfree = freelist->free;
+        return HIDE(freelist);
       }
+    } else {
+      freelist = freelist->next;
     }
   }
 
+  printf("lets return NULL\n");
   return NULL;
 }
 
@@ -165,10 +192,46 @@ void *dalloc(size_t request) {
 
 void dfree(void *memory) {
   if (memory != NULL) {
-    struct head *block = ...
-    struct head *aft = ...
-    block->free = ...
-    block->bfree = ...
+    struct head *block = (struct head*)memory;
+
+    struct head *aft = after(memory);
+    block->free = TRUE;
+    aft->bfree = block->free;
+    insert(block);
   }
+  return;
+}
+
+//  uint16_t bfree;
+//  uint16_t bsize;
+//  uint16_t free;    
+//  uint16_t size;
+//  struct head *next;
+//  struct head *prev;
+void sanity() {
+  struct head *freelist = flist;
+  struct head *are = arena;
+
+  printf("FREELIST\n");
+  while (freelist != NULL) {
+    printf("Addr: %p, size: %d, free: %i, bsize: %d, bfree: %i next: %p, prev: %p\n",
+        freelist, freelist->size, freelist->free, freelist->bsize, freelist->bfree, freelist->next, freelist->prev);
+    if (freelist->free != TRUE) {
+      printf("ERROR: block in freelist is not set to free");
+      exit(1);
+    } 
+    freelist = freelist->next;
+  }
+
+  int no_of_blocks = 0;
+  printf("ARENA\n");
+  while (are->size != 0) {
+    no_of_blocks++;
+    printf("Addr: %p, size: %d, free: %i, bsize: %d, bfree: %i next: (%p), prev: (%p)\n",
+        are, are->size, are->free, are->bsize, are->bfree, are->next, are->prev);
+    are = after(are);
+  }
+  printf("BLOCKS IN ARENA: %i\n", no_of_blocks);
+
   return;
 }
