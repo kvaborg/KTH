@@ -1,6 +1,8 @@
 *.pdf
 *.bin
 *.iso
+*.dat
+*.png
 
 ### C ###
 # Prerequisites

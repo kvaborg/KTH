@@ -34,7 +34,7 @@ struct head *before(struct head *block) {
   return (struct head*)((char *)block - (block->bsize + HEAD));
 }
 
-/* TODO */
+/*  */
 struct head *split(struct head *block, int size) {
   int rsize = block->size - (size + HEAD);
   block->size = rsize;
@@ -148,32 +148,32 @@ struct head *find(int size) {
    * - return pointer to beginning of data segment i.e. by hiding header
   */  
   struct head *freelist = flist;
-  printf("BEFORE WHILE\n");
+  //printf("BEFORE WHILE\n");
   while (freelist) {
-    printf("ENTERING WHILE\n");
+    //printf("ENTERING WHILE\n");
     if (freelist->size >= size) {
-      printf("ENTERING freelist->size >= size\n");
+      //printf("ENTERING freelist->size >= size\n");
       detach(freelist);
       if (freelist->size >= LIMIT(size)) {
-        printf("lets split the block!\n");
+        //printf("lets split the block!\n");
         struct head *block = split(freelist, size);
         struct head *aft = after(block);
         aft->bfree = FALSE;      
         aft->bsize = block->size; 
         insert(freelist);
-        return HIDE(block);
+        return block;
       } else {
         freelist->free = FALSE;
         struct head *aft = after(freelist);
         aft->bfree = freelist->free;
-        return HIDE(freelist);
+        return freelist;
       }
     } else {
       freelist = freelist->next;
     }
   }
 
-  printf("lets return NULL\n");
+  //printf("lets return NULL\n");
   return NULL;
 }
 
@@ -186,20 +186,27 @@ void *dalloc(size_t request) {
   if (taken == NULL) {
     return NULL;
   } else {
-    return taken;
+    return HIDE(taken);
   }
 }
 
 void dfree(void *memory) {
   if (memory != NULL) {
-    struct head *block = (struct head*)memory;
+    //printf("adress before magic: %p\n", memory);
+    struct head *block = MAGIC(memory);
+    //printf("memory that will be freed: %p\n", block);
 
-    struct head *aft = after(memory);
+    struct head *aft = after(block);
     block->free = TRUE;
     aft->bfree = block->free;
     insert(block);
   }
   return;
+}
+
+void init() {
+  struct head *newArena = new_arena();
+  insert(arena);
 }
 
 //  uint16_t bfree;
@@ -223,15 +230,35 @@ void sanity() {
     freelist = freelist->next;
   }
 
-  int no_of_blocks = 0;
   printf("ARENA\n");
   while (are->size != 0) {
-    no_of_blocks++;
     printf("Addr: %p, size: %d, free: %i, bsize: %d, bfree: %i next: (%p), prev: (%p)\n",
         are, are->size, are->free, are->bsize, are->bfree, are->next, are->prev);
     are = after(are);
   }
-  printf("BLOCKS IN ARENA: %i\n", no_of_blocks);
 
   return;
+}
+
+/* return the lenth of the free-list, only for statistics */
+int length_of_free() {
+  int i = 0;
+  struct head *freelist  = flist;
+  while(freelist != NULL) {
+    i++;
+    freelist = freelist->next;
+  }
+  return i; 
+}
+
+/* collect the sizes of all chunks in a buffer */
+void sizes(int *buffer, int max) {
+  struct head *freelist = flist;
+  int i = 0;
+
+  while((freelist != NULL) & (i < max)) {
+    buffer[i] = freelist->size;
+    i++;
+    freelist = freelist->next;
+  }
 }
