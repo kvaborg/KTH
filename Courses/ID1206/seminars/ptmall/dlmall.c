@@ -128,9 +128,8 @@ int adjust(size_t request) {
     return newRequestSize;
   } else {
     int adj = newRequestSize % ALIGN;
-    return newRequestSize + adj;
+    return newRequestSize + (ALIGN - adj);
   }
-
 }
 
 /* find a block that fits the requested size */
@@ -175,6 +174,39 @@ struct head *find(int size) {
 
   //printf("lets return NULL\n");
   return NULL;
+}
+
+struct head *merge(struct head *block) {
+  struct head *aft = after(block);
+
+  if (block->bfree) {
+    /* unlink the block before */
+    struct head *bef = before(block);
+    detach(bef);
+
+    /* calculate and set the total size of the merged blocks */
+    int new_size = bef->size + block->size + HEAD;
+    bef->size = new_size;
+
+    /* update the block after the merged blocks  */
+    aft->bsize = bef->size;
+
+    /* continue with the merged blocks */
+    block = bef;
+  }
+
+  if (aft->free) {
+    /* unlink the block */
+    detach(aft);
+
+    /* calculate and set the total size of merged blocks */
+    int new_size = block->size + aft->size + HEAD;
+    block->size = new_size;
+
+    /* update the block after the merged block */
+    after(aft)->bsize = new_size;
+  }
+  return block;
 }
 
 void *dalloc(size_t request) {

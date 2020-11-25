@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
 
 //    if(memory == NULL) {
 //      //memory = dalloc(0);	
-//      fprintf(stderr, "memory myllocation failed, when tyring to add size: %li", size);
+//      fprintf(stderr, "memory dallocation failed, when tyring to add size: %li", size);
 //      return(1);
 //    }
     buffer[index] = memory;
