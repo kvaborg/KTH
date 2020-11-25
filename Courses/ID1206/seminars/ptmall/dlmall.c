@@ -229,13 +229,22 @@ void dfree(void *memory) {
     struct head *block = MAGIC(memory);
     //printf("memory that will be freed: %p\n", block);
 
-    struct head *aft = after(block);
-    block->free = TRUE;
-    aft->bfree = block->free;
-    insert(block);
-  }
-  return;
+    /* do NOT include merge for testing and benching purpose */
+//    struct head *aft = after(block);
+//    block->free = TRUE;
+//    aft->bfree = block->free;
+//    insert(block);
+
+    /* include merge */
+    struct head *merged = merge(block);
+    struct head *aft = after(merged);
+    merged->free = TRUE;
+    aft->bfree = merged->free;
+    insert(merged);
+ }
+ return;
 }
+
 
 void init() {
   struct head *newArena = new_arena();
