@@ -248,7 +248,7 @@ void dfree(void *memory) {
 
 void init() {
   struct head *newArena = new_arena();
-  insert(arena);
+  insert(newArena);
 }
 
 //  uint16_t bfree;
