@@ -191,7 +191,7 @@ struct head *merge(struct head *block) {
     /* update the block after the merged blocks  */
     aft->bsize = bef->size;
 
-    /* continue with the merged blocks */
+    /* ccontinue with the merged blocks */
     block = bef;
   }
 
