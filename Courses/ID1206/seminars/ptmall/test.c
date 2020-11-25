@@ -5,6 +5,7 @@
 
 int main() {
   init();
+  sanity();
 
   char *mem1;
   char *mem2;
@@ -19,10 +20,10 @@ int main() {
   dfree(mem1);
   sanity();
   dfree(mem3);
-  sanity();
+  //sanity();
   dfree(mem2);
 
-  sanity();
+  //sanity();
 
   return 0;
 }

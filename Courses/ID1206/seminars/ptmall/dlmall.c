@@ -8,6 +8,19 @@
 
 #define TRUE 1
 #define FALSE 0
+#define TAKENSTRUCT 0
+
+#ifdef TAKENSTRUCT
+
+#define HEAD (sizeof(struct taken))
+#define MIN(size) (((size) > (16))?(size):(16))
+#define LIMIT(size) (MIN(0) + HEAD + size)
+#define MAGIC(memory) ((struct taken*)memory - 1)
+#define HIDE(block) (void *)((struct taken*)block + 1)
+#define ALIGN 8
+#define ARENA (64 * 1024)
+
+#else
 
 #define HEAD (sizeof(struct head))
 #define MIN(size) (((size) > (8))?(size):(8))
@@ -16,6 +29,8 @@
 #define HIDE(block) (void *)((struct head*)block + 1)
 #define ALIGN 8
 #define ARENA (64 * 1024)
+
+#endif
 
 struct head {
   uint16_t bfree;
@@ -26,6 +41,13 @@ struct head {
   struct head *prev;
 };
 
+struct taken {
+  uint16_t size;
+  uint16_t free;
+  uint16_t bsize;
+  uint16_t bfree;
+};
+
 struct head *after(struct head *block) {
   return (struct head*)((char *)block + HEAD + block->size);
 }
@@ -34,7 +56,7 @@ struct head *before(struct head *block) {
   return (struct head*)((char *)block - (block->bsize + HEAD));
 }
 
-/*  */
+/* Split the block if it's large enough */
 struct head *split(struct head *block, int size) {
   int rsize = block->size - (size + HEAD);
   block->size = rsize;
@@ -89,16 +111,17 @@ struct head *new_arena() {
   return new;
 }
 
-/* create free list */
 struct head *flist = NULL;
 
 /* detach block from freelist. Update pointers of next and prev */
 void detach(struct head *block) {
   if (block->next != NULL) {
     block->next->prev = block->prev;
+    block->next = NULL; // Remove references to next if there is one
   } 
   if (block->prev != NULL) {
     block->prev->next = block->next;
+    block->prev = NULL; // Remove references to prev if there is one
   } else {
     flist = block->next;
   }
@@ -130,7 +153,6 @@ int adjust(size_t request) {
     int adj = newRequestSize % ALIGN;
     return newRequestSize + (ALIGN - adj);
   }
-
 }
 
 /* find a block that fits the requested size */
@@ -215,18 +237,18 @@ void *dalloc(size_t request) {
     return NULL;
   }
   int size = adjust(request);
-  struct head *taken = find(size);
-  if (taken == NULL) {
+  struct head* block= find(size);
+  if (block == NULL) {
     return NULL;
   } else {
-    return HIDE(taken);
+    return HIDE(block);
   }
 }
 
 void dfree(void *memory) {
   if (memory != NULL) {
     //printf("adress before magic: %p\n", memory);
-    struct head *block = MAGIC(memory);
+    struct head *block = (struct head*)MAGIC(memory);
     //printf("memory that will be freed: %p\n", block);
 
     /* do NOT include merge for testing and benching purpose */
@@ -248,7 +270,7 @@ void dfree(void *memory) {
 
 void init() {
   struct head *newArena = new_arena();
-  insert(newArena);
+  insert(arena);
 }
 
 //  uint16_t bfree;
