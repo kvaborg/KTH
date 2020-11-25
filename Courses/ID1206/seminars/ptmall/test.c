@@ -17,6 +17,8 @@ int main() {
   mem4 = (char *)dalloc(15);
 
   dfree(mem1);
+  dfree(mem3);
+  dfree(mem2);
 
   sanity();
 

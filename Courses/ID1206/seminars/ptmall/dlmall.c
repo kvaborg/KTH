@@ -128,7 +128,7 @@ int adjust(size_t request) {
     return newRequestSize;
   } else {
     int adj = newRequestSize % ALIGN;
-    return newRequestSize + adj;
+    return newRequestSize + (ALIGN - adj);
   }
 
 }
