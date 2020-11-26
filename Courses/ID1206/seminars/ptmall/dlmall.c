@@ -117,11 +117,9 @@ struct head *flist = NULL;
 void detach(struct head *block) {
   if (block->next != NULL) {
     block->next->prev = block->prev;
-    block->next = NULL; // Remove references to next if there is one
   } 
   if (block->prev != NULL) {
     block->prev->next = block->next;
-    block->prev = NULL; // Remove references to prev if there is one
   } else {
     flist = block->next;
   }
@@ -269,7 +267,7 @@ void dfree(void *memory) {
 
 
 void init() {
-  struct head *newArena = new_arena();
+  new_arena();
   insert(arena);
 }
 
