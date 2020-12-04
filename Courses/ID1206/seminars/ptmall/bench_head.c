@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
   }
   
   end = clock();
-  total += end - start;
+  total += (end - start);
   printf("Write time: %ld\n", (end - start));
   printf("Total time: %ld\n", total);
 
