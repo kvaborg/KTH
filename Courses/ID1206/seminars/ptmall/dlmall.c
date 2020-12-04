@@ -117,11 +117,9 @@ struct head *flist = NULL;
 void detach(struct head *block) {
   if (block->next != NULL) {
     block->next->prev = block->prev;
-    block->next = NULL; // Remove references to next if there is one
   } 
   if (block->prev != NULL) {
     block->prev->next = block->next;
-    block->prev = NULL; // Remove references to prev if there is one
   } else {
     flist = block->next;
   }
@@ -170,14 +168,10 @@ struct head *find(int size) {
    * - return pointer to beginning of data segment i.e. by hiding header
   */  
   struct head *freelist = flist;
-  //printf("BEFORE WHILE\n");
   while (freelist) {
-    //printf("ENTERING WHILE\n");
     if (freelist->size >= size) {
-      //printf("ENTERING freelist->size >= size\n");
       detach(freelist);
       if (freelist->size >= LIMIT(size)) {
-        //printf("lets split the block!\n");
         struct head *block = split(freelist, size);
         struct head *aft = after(block);
         aft->bfree = FALSE;      
@@ -195,7 +189,6 @@ struct head *find(int size) {
     }
   }
 
-  //printf("lets return NULL\n");
   return NULL;
 }
 
@@ -267,18 +260,11 @@ void dfree(void *memory) {
  return;
 }
 
-
 void init() {
   struct head *newArena = new_arena();
-  insert(arena);
+  insert(newArena);
 }
 
-//  uint16_t bfree;
-//  uint16_t bsize;
-//  uint16_t free;    
-//  uint16_t size;
-//  struct head *next;
-//  struct head *prev;
 void sanity() {
   struct head *freelist = flist;
   struct head *are = arena;

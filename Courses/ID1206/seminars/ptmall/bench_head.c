@@ -8,13 +8,13 @@ int main(int argc, char *argv[]) {
   init();
 
   clock_t start, end, total;
-  int no_of_blocks = 1000;
+  int no_of_blocks = 2000;
   void *memory[no_of_blocks];
 
   start = clock();
   
   for (int i = 0; i < no_of_blocks; i++) {
-    memory[i] = dalloc(24);
+    memory[i] = dalloc(16);
   }
 
   end = clock();
@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
   start = clock();
 
   for (int i = 0; i < no_of_blocks; i++) {
-    for (int j = 0; j < no_of_blocks * 2; j++) {
+    for (int j = 0; j < no_of_blocks * 10; j++) {
       int *mem = memory[i];
       *mem = j;
     }
