@@ -44,11 +44,11 @@ int main(int argc, char *argv[]) {
     int *memory; 
     memory = dalloc(size);
 
-//    if(memory == NULL) {
-//      //memory = dalloc(0);	
-//      fprintf(stderr, "memory dallocation failed, when tyring to add size: %li", size);
-//      return(1);
-//    }
+    if(memory == NULL) {
+      //memory = dalloc(0);	
+      fprintf(stderr, "memory dallocation failed, when tyring to add size: %li", size);
+      return(1);
+    }
     buffer[index] = memory;
     /* writing to the memory so we know it exists */
     // *memory = 123;

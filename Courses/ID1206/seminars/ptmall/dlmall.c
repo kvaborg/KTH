@@ -8,7 +8,7 @@
 
 #define TRUE 1
 #define FALSE 0
-#define TAKENSTRUCT 0
+#define TAKENSTRUCT 1
 
 #ifdef TAKENSTRUCT
 
@@ -230,7 +230,7 @@ void *dalloc(size_t request) {
     return NULL;
   }
   int size = adjust(request);
-  struct head* block= find(size);
+  struct taken* block = (struct taken*)find(size);
   if (block == NULL) {
     return NULL;
   } else {
@@ -245,24 +245,24 @@ void dfree(void *memory) {
     //printf("memory that will be freed: %p\n", block);
 
     /* do NOT include merge for testing and benching purpose */
-//    struct head *aft = after(block);
-//    block->free = TRUE;
-//    aft->bfree = block->free;
-//    insert(block);
+    struct head *aft = after(block);
+    block->free = TRUE;
+    aft->bfree = block->free;
+    insert(block);
 
     /* include merge */
-    struct head *merged = merge(block);
-    struct head *aft = after(merged);
-    merged->free = TRUE;
-    aft->bfree = merged->free;
-    insert(merged);
+//     struct head *merged = merge(block);
+//     struct head *aft = after(merged);
+//     merged->free = TRUE;
+//     aft->bfree = merged->free;
+//     insert(merged);
  }
  return;
 }
 
 void init() {
-  struct head *newArena = new_arena();
-  insert(newArena);
+  new_arena();
+  insert(arena);
 }
 
 void sanity() {
