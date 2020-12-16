@@ -19,6 +19,7 @@ static void init() __attribute__((constructor));
 
 struct Queue *ready_queue = NULL;
 
+/* Get main context and initialize ready_queue when program is loaded */
 void init() {
   getcontext(&main_ctnx);
   ready_queue = create_queue();
@@ -31,7 +32,7 @@ void green_thread() {
 
   /* TODO: Place waiting (joining) thread in ready queue) */
   if (this->join != NULL) {
-    enqueue(ready_queue, this);
+    enqueue(ready_queue, this->join);
   }
 
   /* TODO: save result of execution */
@@ -41,9 +42,10 @@ void green_thread() {
   this->zombie = TRUE;
 
   /* TODO: find the next thread to run */
-
-  //running = next;
-  //setcontext(next->context);
+  green_t *next = ready_queue->front;
+  running = next;
+  dequeue(ready_queue);
+  setcontext(next->context);
 }
 
 int green_create(green_t *new, void *(*fun)(void*), void *arg) {
@@ -70,4 +72,39 @@ int green_create(green_t *new, void *(*fun)(void*), void *arg) {
   return 0;
 }
 
+int green_yield() {
+  green_t *susp = running;
 
+  // Add susp to ready queue
+  enqueue(ready_queue, susp);
+  
+  // Select the next thread for execution
+  green_t *next = ready_queue->front;
+  running = next;
+  dequeue(ready_queue);
+  swapcontext(susp->context, next->context);
+
+  return 0;
+}
+
+int green_join(struct green_t *thread, void **res) {
+  if (!thread->zombie) {
+    green_t *susp = running;
+
+    // Add as joining thread
+    thread->join = susp;
+    
+    //select the next thread for execution
+    green_t *next = ready_queue->front;
+    running = next;
+    dequeue(ready_queue);
+    swapcontext(susp->context, next->context);
+  } 
+  // collect result
+  thread->retval = res;
+
+  // free context
+  free(thread->context);
+
+  return 0;
+}

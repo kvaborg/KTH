@@ -33,30 +33,30 @@ void sanity(struct Queue *queue) {
 }
 
 int main() {
-//  struct Queue *queue = create_queue();
+  struct Queue *queue = create_queue();
 
   green_t *a = (green_t*)malloc(sizeof(green_t));
   green_t *b = (green_t*)malloc(sizeof(green_t));
   green_t *c = (green_t*)malloc(sizeof(green_t));
 
-  green_create(a, funA, NULL);
-  green_create(b, funB, NULL);
-  green_create(c, funC, NULL);
+  a->fun = funA;
+  b->fun = funB;
+  c->fun = funC;
 
-//  a->fun = funA;
-//  b->fun = funB;
-//  c->fun = funC;
+  enqueue(queue, a);
+  enqueue(queue, b);
+  enqueue(queue, c);
 
-//  enqueue(queue, a);
-//  enqueue(queue, b);
-//  enqueue(queue, c);
-  sanity(ready_queue);
+  sanity(queue);
 
-  dequeue(ready_queue);
-  dequeue(ready_queue);
-  dequeue(ready_queue);
-  dequeue(ready_queue);
-  sanity(ready_queue);
+  dequeue(queue);
+  sanity(queue);
+  dequeue(queue);
+  sanity(queue);
+  dequeue(queue);
+  sanity(queue);
+  dequeue(queue);
+  sanity(queue);
 
   return 0;
 }

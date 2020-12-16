@@ -48,6 +48,6 @@ void dequeue(struct Queue *queue) {
   }
 
   queue->length -= 1;
-  free(temp);
+  //free(temp);
   
 }
