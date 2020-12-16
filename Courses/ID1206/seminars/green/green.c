@@ -30,18 +30,18 @@ void green_thread() {
 
   void *result = (*this->fun)(this->arg);
 
-  /* TODO: Place waiting (joining) thread in ready queue) */
+  /* Place waiting (joining) thread in ready queue) */
   if (this->join != NULL) {
     enqueue(ready_queue, this->join);
   }
 
-  /* TODO: save result of execution */
+  /* save result of execution */
   this->retval = result;
 
-  /* TODO: We're a zombie */
+  /* We're a zombie */
   this->zombie = TRUE;
 
-  /* TODO: find the next thread to run */
+  /* find the next thread to run */
   green_t *next = ready_queue->front;
   running = next;
   dequeue(ready_queue);
@@ -67,7 +67,7 @@ int green_create(green_t *new, void *(*fun)(void*), void *arg) {
   new->retval = NULL;
   new->zombie = FALSE;
 
-  /* TODO: Add to the ready queue */
+  /* Add to the ready queue */
   enqueue(ready_queue, new);
   return 0;
 }
@@ -101,7 +101,9 @@ int green_join(struct green_t *thread, void **res) {
     swapcontext(susp->context, next->context);
   } 
   // collect result
-  thread->retval = res;
+  if (thread->retval != NULL) {
+    *res = thread->retval;
+  }
 
   // free context
   free(thread->context);
