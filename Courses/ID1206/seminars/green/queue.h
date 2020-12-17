@@ -2,11 +2,12 @@
 #define _QUEUE
 
 #include "green.h"
+
 struct Queue {
   struct green_t *front;
   struct green_t *rear;
   int length;
-} Queue;
+};
 
 struct Queue *create_queue(void);
 void enqueue(struct Queue *queue, struct green_t *thread);
