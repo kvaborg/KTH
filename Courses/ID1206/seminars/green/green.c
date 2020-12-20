@@ -17,7 +17,7 @@ static green_t *running = &main_green;
 
 static void init() __attribute__((constructor));
 
-struct Queue *ready_queue = NULL;
+Queue *ready_queue = NULL;
 
 /* Get main context and initialize ready_queue when program is loaded */
 void init() {
@@ -42,9 +42,8 @@ void green_thread() {
   this->zombie = TRUE;
 
   /* find the next thread to run */
-  green_t *next = ready_queue->front;
+  green_t *next = dequeue(ready_queue);
   running = next;
-  dequeue(ready_queue);
   setcontext(next->context);
 }
 
@@ -79,9 +78,8 @@ int green_yield() {
   enqueue(ready_queue, susp);
   
   // Select the next thread for execution
-  green_t *next = ready_queue->front;
+  green_t *next = dequeue(ready_queue);
   running = next;
-  dequeue(ready_queue);
   swapcontext(susp->context, next->context);
 
   return 0;
@@ -95,9 +93,8 @@ int green_join(struct green_t *thread, void **res) {
     thread->join = susp;
     
     //select the next thread for execution
-    green_t *next = ready_queue->front;
+    green_t *next = dequeue(ready_queue);
     running = next;
-    dequeue(ready_queue);
     swapcontext(susp->context, next->context);
   } 
   // collect result
@@ -109,4 +106,35 @@ int green_join(struct green_t *thread, void **res) {
   free(thread->context);
 
   return 0;
+}
+
+/* Initialize a green condition variable.
+   Cond points to the queue of suspended threads */
+void green_cond_init(green_cond_t *cond) {
+  cond = create_queue();
+}
+
+/* Suspend the current thread on the condition.
+   Cond points to the queue of suspended threads */
+void green_cond_wait(green_cond_t *cond) {
+  green_t *susp = running;
+
+  // Add susp to  queue
+  enqueue(cond, susp);
+  
+  // Select the next thread for execution
+  green_t *next = dequeue(ready_queue);
+  running = next;
+  swapcontext(susp->context, next->context);
+}
+
+/* Move the first suspended thread to the ready queue.
+   Cond points to the queue of suspended threads */
+void green_cond_signal(green_cond_t *cond) {
+  if (cond != NULL) {
+    green_t *ready = dequeue(cond);
+    enqueue(ready_queue, ready);
+  } else {
+    return;
+  }
 }

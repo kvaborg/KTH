@@ -16,7 +16,7 @@ struct Queue *create_queue() {
     of the thread points to the element that is 
     closer to the rear end of the queue realtive to itself. 
 */
-void enqueue(struct Queue *queue, green_t *thread) {
+void enqueue(struct Queue *queue, void *thread) {
 
   /* If queue is empty */
   if (queue->rear == NULL) {
@@ -31,11 +31,11 @@ void enqueue(struct Queue *queue, green_t *thread) {
   queue->length += 1;
 }
 
-void dequeue(struct Queue *queue) {
+struct green_t *dequeue(struct Queue *queue) {
 
   /* If the queue is empty, return NULL */
   if (queue->front == NULL) {
-    return;
+    return NULL;
   }
 
   green_t *temp = queue->front;
@@ -49,5 +49,6 @@ void dequeue(struct Queue *queue) {
 
   queue->length -= 1;
   //free(temp);
+  return temp;
   
 }

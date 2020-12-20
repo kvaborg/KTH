@@ -1,17 +1,18 @@
 #ifndef _QUEUE
 #define _QUEUE
 
-#include "green.h"
-
-struct Queue {
+typedef struct Queue {
   struct green_t *front;
   struct green_t *rear;
   int length;
-};
+} Queue, green_cond_t;
 
 struct Queue *create_queue(void);
-void enqueue(struct Queue *queue, struct green_t *thread);
-void dequeue(struct Queue *queue);
+
+/* Update formal param *thread from green_t to void to make
+   more general */
+void enqueue(struct Queue *queue, void *thread);
+struct green_t *dequeue(struct Queue *queue);
 
 #endif
 
