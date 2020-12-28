@@ -48,7 +48,6 @@ struct green_t *dequeue(struct Queue *queue) {
   }
 
   queue->length -= 1;
-  //free(temp);
   return temp;
   
 }

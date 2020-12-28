@@ -27,6 +27,7 @@ void init() {
 
 void green_thread() {
   green_t *this = running;
+  assert(this->fun != NULL);
 
   void *result = (*this->fun)(this->arg);
 
@@ -88,12 +89,14 @@ int green_yield() {
 int green_join(struct green_t *thread, void **res) {
   if (!thread->zombie) {
     green_t *susp = running;
+    assert(susp != NULL);
 
     // Add as joining thread
     thread->join = susp;
     
     //select the next thread for execution
     green_t *next = dequeue(ready_queue);
+    assert(next != NULL);
     running = next;
     swapcontext(susp->context, next->context);
   } 
@@ -111,19 +114,21 @@ int green_join(struct green_t *thread, void **res) {
 /* Initialize a green condition variable.
    Cond points to the queue of suspended threads */
 void green_cond_init(green_cond_t *cond) {
-  cond = create_queue();
+  cond->susp_list = create_queue();
 }
 
 /* Suspend the current thread on the condition.
    Cond points to the queue of suspended threads */
 void green_cond_wait(green_cond_t *cond) {
   green_t *susp = running;
+  assert(susp != NULL);
 
-  // Add susp to  queue
-  enqueue(cond, susp);
+  // Add susp to queue
+  enqueue(cond->susp_list, susp);
   
   // Select the next thread for execution
   green_t *next = dequeue(ready_queue);
+  assert(next != NULL);
   running = next;
   swapcontext(susp->context, next->context);
 }
@@ -131,10 +136,8 @@ void green_cond_wait(green_cond_t *cond) {
 /* Move the first suspended thread to the ready queue.
    Cond points to the queue of suspended threads */
 void green_cond_signal(green_cond_t *cond) {
-  if (cond != NULL) {
-    green_t *ready = dequeue(cond);
+  green_t *ready = dequeue(cond->susp_list);
+  if (ready != NULL) {
     enqueue(ready_queue, ready);
-  } else {
-    return;
   }
 }

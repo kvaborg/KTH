@@ -15,6 +15,10 @@ typedef struct green_t {
   int zombie;
 } green_t;
 
+typedef struct green_cond_t {
+  struct Queue *susp_list;
+} green_cond_t;
+
 extern struct Queue *ready_queue;
 
 int green_create(struct green_t *thread, void *(*fun)(void *), void *arg);

@@ -5,7 +5,7 @@ typedef struct Queue {
   struct green_t *front;
   struct green_t *rear;
   int length;
-} Queue, green_cond_t;
+} Queue;
 
 struct Queue *create_queue(void);
 

@@ -14,6 +14,7 @@ void *testA(void *arg) {
     loop--;
     green_yield();
   }
+  return NULL;
 }
 
 void *testB(void *arg) {
@@ -26,7 +27,7 @@ void *testB(void *arg) {
 void *test(void *arg) {
   int id = *(int *)arg;
   int loop = 4;
-  while(loop >= 0) {
+  while(loop > 0) {
     if (flag == id) {
       printf("thread %d: %d\n", id, loop);
       loop--;
@@ -36,16 +37,17 @@ void *test(void *arg) {
       green_cond_wait(&cond);
     }
   }
-  return NULL;
+  //return NULL; //Without this we get segfault. WHY??
 }
 
 int main() {
+
   green_t g0, g1;
+  
+  green_cond_init(&cond);
 
   int a0 = 0;
   int a1 = 1;
-
-  green_cond_init(&cond);
 
   green_create(&g0, test, &a0);
   green_create(&g1, test, &a1);
