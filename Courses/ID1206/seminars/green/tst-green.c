@@ -10,6 +10,7 @@ void *testA(void *arg) {
     loop--;
     green_yield();
   }
+  return NULL;
 }
 
 void *testB(void *arg) {

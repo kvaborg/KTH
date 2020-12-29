@@ -137,7 +137,5 @@ void green_cond_wait(green_cond_t *cond) {
    Cond points to the queue of suspended threads */
 void green_cond_signal(green_cond_t *cond) {
   green_t *ready = dequeue(cond->susp_list);
-  if (ready != NULL) {
-    enqueue(ready_queue, ready);
-  }
+  enqueue(ready_queue, ready);
 }
