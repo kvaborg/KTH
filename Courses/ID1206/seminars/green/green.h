@@ -19,7 +19,16 @@ typedef struct green_cond_t {
   struct Queue *susp_list;
 } green_cond_t;
 
+typedef struct green_mutex_t {
+  volatile int taken;
+  struct Queue *susp;
+} green_mutex_t;
+
 // extern struct Queue *ready_queue;
+
+int green_mutex_init(green_mutex_t *mutex);
+int green_mutex_lock(green_mutex_t *mutex);
+int green_mutex_unlock(green_mutex_t *mutex);
 
 void timer_handler(int);
 int green_create(struct green_t *thread, void *(*fun)(void *), void *arg);

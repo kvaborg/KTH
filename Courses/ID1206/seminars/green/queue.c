@@ -35,17 +35,13 @@ struct green_t *dequeue(struct Queue *queue) {
 
   /* If the queue is empty, return NULL */
   if (queue->front == NULL) {
+    queue->rear = NULL;
     return NULL;
   }
 
   green_t *temp = queue->front;
 
   queue->front = queue->front->next;
-
-  /* If front is the last element in the list, change rear to NULL */
-  if (queue->front == NULL) {
-    queue->rear = NULL;
-  }
 
   queue->length -= 1;
   return temp;

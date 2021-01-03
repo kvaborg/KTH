@@ -25,9 +25,9 @@ static green_t *running = &main_green;
 
 static sigset_t block;
 
-static void init() __attribute__((constructor));
-
 static struct Queue *ready_queue = NULL;
+
+static void init() __attribute__((constructor));
 
 /* Get main context and initialize ready_queue when program is loaded */
 void init() {
@@ -54,12 +54,9 @@ void init() {
 void timer_handler(int sig) {
 
   char *buf = "INTERRUPT!\n\n";
-
-  sigprocmask(SIG_BLOCK, &block, NULL);
   write(1, buf, sizeof(buf));
 
   green_yield();
-  sigprocmask(SIG_UNBLOCK, &block, NULL);
 }
 
 void green_thread() {
@@ -190,7 +187,62 @@ void green_cond_wait(green_cond_t *cond) {
    Cond points to the queue of suspended threads */
 void green_cond_signal(green_cond_t *cond) {
   sigprocmask(SIG_BLOCK, &block, NULL);
+
+  if (cond->susp_list->front == NULL) {
+    assert(cond->susp_list->length == 0);
+    return;
+  }
+
   green_t *ready = dequeue(cond->susp_list);
   enqueue(ready_queue, ready);
   sigprocmask(SIG_UNBLOCK, &block, NULL);
+}
+
+int green_mutex_init(green_mutex_t *mutex) {
+  sigprocmask(SIG_BLOCK, &block, NULL);
+  mutex->taken = FALSE;
+
+  //Initialize fields
+  mutex->susp = create_queue();
+  sigprocmask(SIG_UNBLOCK, &block, NULL);
+
+  return 0;
+}
+
+int green_mutex_lock(green_mutex_t *mutex) {
+  sigprocmask(SIG_BLOCK, &block, NULL);
+
+  green_t *susp = running;
+
+  if (mutex->taken) {
+    // suspend the current thread
+    enqueue(mutex->susp, susp);
+
+    // find the next thread
+    green_t *next = dequeue(ready_queue);
+    running = next;
+    swapcontext(susp->context, next->context);
+  } else {
+    // take the lock
+    mutex->taken = TRUE;
+  }
+  // unblock
+  sigprocmask(SIG_UNBLOCK, &block, NULL);
+
+  return 0;
+}
+
+int green_mutex_unlock(green_mutex_t *mutex) {
+  sigprocmask(SIG_BLOCK, &block, NULL);
+
+  if (mutex->susp->front != NULL) {
+    green_t *ready = dequeue(mutex->susp);
+    enqueue(ready_queue, ready);
+  } else {
+    mutex->taken = FALSE;
+  }
+
+  sigprocmask(SIG_UNBLOCK, &block, NULL);
+
+  return 0;
 }
