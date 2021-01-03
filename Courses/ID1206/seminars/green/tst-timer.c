@@ -20,7 +20,7 @@ void hold() {
 
   clock_gettime(CLOCK_MONOTONIC, &start);
   
-  while(finish.tv_nsec - start.tv_nsec < 9999999) {
+  while(finish.tv_nsec - start.tv_nsec < 4000000) {
     clock_gettime(CLOCK_MONOTONIC, &finish);
   }
   return;
@@ -34,8 +34,9 @@ void *test(void *arg) {
       printf("thread %d: %d\n", id, loop);
       loop--;
       flag = (id + 1) % 2;
-      int f = fib(29);
-      //hold();
+      //int f = fib(20);
+      //printf("dummy: %i\n", f);
+      hold();
       green_cond_signal(&cond);
     } else {
       green_cond_wait(&cond);
@@ -61,4 +62,5 @@ int main() {
   printf("done\n");
   return 0;
 }
+
 

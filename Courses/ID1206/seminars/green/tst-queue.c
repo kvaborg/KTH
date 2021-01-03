@@ -58,5 +58,9 @@ int main() {
   dequeue(queue);
   sanity(queue);
 
+  free(a);
+  free(b);
+  free(c);
+
   return 0;
 }
