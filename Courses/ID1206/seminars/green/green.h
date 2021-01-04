@@ -37,7 +37,7 @@ int green_join(struct green_t *thread, void** res);
 
 /* Cond functions */
 void green_cond_init(green_cond_t *cond);
-void green_cond_wait(green_cond_t *cond);
+void green_cond_wait(green_cond_t *cond, green_mutex_t *mutex); 
 void green_cond_signal(green_cond_t *cond);
 
 /* mutex functions */

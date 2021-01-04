@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include "green.h"
-#include "queue.h"
 
 int flag = 0;
 green_cond_t cond;
@@ -34,8 +33,8 @@ void *test(void *arg) {
       printf("thread %d: %d\n", id, loop);
       loop--;
       flag = (id + 1) % 2;
-      int f = fib(29);
-      //hold();
+      //int f = fib(29);
+      hold();
       green_cond_signal(&cond);
     } else {
       green_cond_wait(&cond);

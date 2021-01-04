@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include "green.h"
-#include "queue.h"
 
 int flag = 0;
 green_cond_t cond;
