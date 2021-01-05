@@ -176,12 +176,12 @@ void green_cond_wait(green_cond_t *cond, green_mutex_t *mutex) {
 
   if (mutex != NULL) {
     // release the lock if we have a mutex
-    // alt. mutex->taken = TRUE;
-    green_mutex_unlock(mutex);
+    mutex->taken = FALSE;
 
     // move suspended thread to ready queue
     green_t *ready = dequeue(&mutex->susp);
     enqueue(&ready_queue, ready);
+    mutex->susp = NULL;
   }
 
   // schedule next thread
@@ -195,6 +195,10 @@ void green_cond_wait(green_cond_t *cond, green_mutex_t *mutex) {
       // bad luck, suspend
       green_t *susp = running;
       enqueue(&mutex->susp, susp);
+
+      green_t *next = dequeue(&ready_queue);
+      running = next;
+      swapcontext(susp->context, next->context);
     } else {
       // take the lock
       green_mutex_lock(mutex);

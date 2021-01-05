@@ -9,7 +9,7 @@ int flag = 0;
 
 void *test(void *arg) {
   int id = *(int *)arg;
-  int loop = 4;
+  int loop = 20000;
   while(loop > 0) {
     green_mutex_lock(&mutex);
     while (flag != id) {
